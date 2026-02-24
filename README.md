@@ -27,12 +27,12 @@ Conexión a Internet
 ### Precondicion generales
 |ID|Descripción          |Pasos|Resultado esperado|
 |------|---------------------|-----|------------------|
-|PC-01 |Ingresar al sitio Web|1. Navegador disponible <br>2. Sito web disponible 'https://automationexercise.com/' <br>3. Navegar al sitio web |La pagina se visualiza correctamente|
+|PC-01 |La aplicacion we se encuentra disponible y accesible mediante un navegador(https://automationexercise.com/)|
 
 ### Test Case 1
 |ID        |Descripcion      |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
 |----------|-----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-01 |Registrar usuario|login |Alta     |Precondicion PC-01 cumplida|email no registrado|La cuenta se crea de manera exitosa y el usuario queda autenticado|
+|TC-REG-01 |Registrar usuario|Registro |Alta     |Precondicion PC-01 cumplida|email valido y no registrado en el sistema|La cuenta se crea de manera exitosa y el usuario queda autenticado|
 
 |Pasos|Acción                    |Resultado esperado|
 |-----|--------------------------|----------------------|
@@ -60,20 +60,61 @@ Conexión a Internet
 ### Test case 3
 |ID       |Descripción   |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
 |---------|--------------|------|---------|--------------|---------------|------------------|
-|TC-REG-03|Cerrar sesion |login |Alta     |Precondición PC-01 cumplida <br>caso de prueba TC-REG-02 ejecutado y exitoso| |Se debe cerrar sesión de forma exitosa y el usaurio ya no estara autenticado|
+|TC-REG-03|Cerrar sesion |login |Alta     |Precondición PC-01 cumplida <br>caso de prueba TC-REG-02 ejecutado y exitoso| |Se debe cerrar sesión de forma exitosa y el usuario ya no estara autenticado|
 
 |Pasos|Acción|Resultado esperado|
 |-----|------|------------------|
 |1    |Hacer clic en el botón 'Logout'|El usuario ya no estara autenticado. No se mostrara el nombre del usuario entre las opciones del header. Automaticamente se encontrara en el modulo de login|
 
 ### Test case 4
-inicar sesión con usuario incorrecto
+
+|ID       |Descripción   |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|--------------|------|---------|--------------|---------------|------------------|
+|TC-REG-04|Iniciar sesión con usuario no registrado previamente |login |Alta     |Precondición PC-01 cumplida|Cuenta no registrada en el sistema |No se debe iniciar sesión con el usuario ingresado.|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón 'Signup / login' | Se muestra la sección 'Login to your account' |
+|2    |Ingresar el email y contraseña de una cuenta que no se encuentre registrada, en los campos correspondientes de la sección|El sistema acepta  los datos|
+|3    |Hacer clic en el botón 'login' | El usuario no sera autenticado. Se muestra un mensaje indicando que el usuario o contraseña con invalidos|
+
 
 ### Test case 5
-Registrar usuario con email existente
+
+|ID        |Descripcion      |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|----------|-----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-05 |Registrar usuario con email registrado previamente|Registro |Alta     |Precondicion PC-01 cumplida|email valido y registrado en el sistema|La cuenta no sera creada|
+
+|Pasos|Acción                    |Resultado esperado|
+|-----|--------------------------|----------------------|
+|1    |Hacer clic en el botón 'Signup / login'| Se muestra la sección de 'New user Signup!'
+|2    |Ingresar nombre y email validos de una cuenta registrada previamente en los campos correspondiente de la sección|El sistema acepta los dato|
+|3    |Hacer clic en el botón Signup|No se muestra la pantalla 'Enter account information'.Se muestra un mensaje indicando que el email ya se encuentra registrado en el sistema|
 
 ### Test case 6
-eliminar cuenta
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-06|Eliminar cuenta |login |Alta     |Precondición PC-01 cumplida <br>caso de prueba TC-REG-02 ejecutado y exitoso| |Se debe eliminar la cuenta|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón 'Delete Account'|El usuario ya no estara autenticado. No se mostrara el nombre del usuario entre las opciones del header.|
+|2    |Hacer clic en el botón 'Signup / login' | Se muestra la sección 'Login to your account' |
+|3    |Ingresar el email y contraseña de la cuenta eliminada, en los campos correspondientes de la sección|El sistema acepta  los datos|
+|4    |Hacer clic en el botón 'login' | El usuario no sera autenticado. Se muestra un mensaje indicando que el usuario o contraseña son invalidos|
+
+### Test case 7
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-06|Enviar un mensaje de contacto |Contact us |Alta     |Precondición PC-01 cumplida|email valido |Se debe mandar una mensaje de notificación a los dueños de la empresa|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón 'Delete Account'|El usuario ya no estara autenticado. No se mostrara el nombre del usuario entre las opciones del header.|
+|2    |Hacer clic en el botón 'Signup / login' | Se muestra la sección 'Login to your account' |
+|3    |Ingresar el email y contraseña de la cuenta eliminada, en los campos correspondientes de la sección|El sistema acepta  los datos|
+|4    |Hacer clic en el botón 'login' | El usuario no sera autenticado. Se muestra un mensaje indicando que el usuario o contraseña son invalidos|
+
 
 
 
