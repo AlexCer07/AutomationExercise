@@ -106,14 +106,41 @@ Conexión a Internet
 ### Test case 7
 |ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
 |---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-06|Enviar un mensaje de contacto |Contact us |Alta     |Precondición PC-01 cumplida|email valido |Se debe mandar una mensaje de notificación a los dueños de la empresa|
+|TC-REG-06|Enviar un mensaje de contacto |Contact us |Media     |Precondición PC-01 cumplida|email valido |Se debe mandar una mensaje de notificación por correo a la empresa|
 
 |Pasos|Acción|Resultado esperado|
 |-----|------|------------------|
-|1    |Hacer clic en el botón 'Delete Account'|El usuario ya no estara autenticado. No se mostrara el nombre del usuario entre las opciones del header.|
-|2    |Hacer clic en el botón 'Signup / login' | Se muestra la sección 'Login to your account' |
-|3    |Ingresar el email y contraseña de la cuenta eliminada, en los campos correspondientes de la sección|El sistema acepta  los datos|
-|4    |Hacer clic en el botón 'login' | El usuario no sera autenticado. Se muestra un mensaje indicando que el usuario o contraseña son invalidos|
+|1    |Hacer clic en el botón 'Contact Us'|Se muestra la sección 'Get it Touch'.|
+|2    |Ingresar el nombre, email, asunto y mensaje en los campos correspondiente de la sección | El sistem acepta los datos |
+|3    |Hacer clic en el botón 'Seleccionar archivo'|Se abrira el explorador de archivos del equipo|
+|4    |Hacer clic en un archivo que se desee subir y hacer clic en aceptar| El sistema acepta el archivo |
+|5    |Hacer clic en el botón 'submit'|Se mostrara una alerta para confirmar el envio del mensaje|
+|6    |Hacer clic en el botón aceptar|El formulario dejeara de mostrarse, en su lugar se mostrar el mensaje 'Success! Your details have been submitted successfully.'|
+|7    |Hacer clic en el botón Home|Se redirigira a la pagina home de forma exitosa|
+
+### Testcase 8
+
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-06|Navegar a los casos de prueba |Test cases|baja     |Precondición PC-01 cumplida| |Se debn mostrar los casos de prueba que tiene el sitio web|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón 'Test cases'|Se muestra la sección 'Test cases' con los casos de prueba que tiene el sitio web|
+
+### Testcase 9
+
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-06|Mostrar detalle del producto |Product detail|Alta     |Precondición PC-01 cumplida| |Se deben mostrar todos los detalles del producto|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón 'Products'|Se muestra la sección 'All Products' y la lista de productos sera visible|
+|2    |Hacer clic en el botón 'View Produt' del primer producto|Se redirigira a la vista con los detalles del producto, mostrandose el product name, category, price, availability, condition, brand|
+
+
+
 
 
 
