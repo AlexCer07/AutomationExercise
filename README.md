@@ -106,7 +106,7 @@ Conexión a Internet
 ### Test case 7
 |ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
 |---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-06|Enviar un mensaje de contacto |Contact us |Media     |Precondición PC-01 cumplida|email valido |Se debe mandar una mensaje de notificación por correo a la empresa|
+|TC-REG-07|Enviar un mensaje de contacto |Contact us |Media     |Precondición PC-01 cumplida|email valido |Se debe mandar una mensaje de notificación por correo a la empresa|
 
 |Pasos|Acción|Resultado esperado|
 |-----|------|------------------|
@@ -122,7 +122,7 @@ Conexión a Internet
 
 |ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
 |---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-06|Navegar a los casos de prueba |Test cases|baja     |Precondición PC-01 cumplida| |Se debn mostrar los casos de prueba que tiene el sitio web|
+|TC-REG-08|Navegar a los casos de prueba |Test cases|baja     |Precondición PC-01 cumplida| |Se debn mostrar los casos de prueba que tiene el sitio web|
 
 |Pasos|Acción|Resultado esperado|
 |-----|------|------------------|
@@ -132,14 +132,35 @@ Conexión a Internet
 
 |ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
 |---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-06|Mostrar detalle del producto |Product detail|Alta     |Precondición PC-01 cumplida| |Se deben mostrar todos los detalles del producto|
+|TC-REG-09|Mostrar detalle del producto |Product detail|Alta     |Precondición PC-01 cumplida| |Se deben mostrar todos los detalles del producto|
 
 |Pasos|Acción|Resultado esperado|
 |-----|------|------------------|
 |1    |Hacer clic en el botón 'Products'|Se muestra la sección 'All Products' y la lista de productos sera visible|
 |2    |Hacer clic en el botón 'View Produt' del primer producto|Se redirigira a la vista con los detalles del producto, mostrandose el product name, category, price, availability, condition, brand|
 
+### Testcase 10
 
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-10|Buscar producto |Product|Alta     |Precondición PC-01 cumplida|Nombre del producto existente |Se deben mostrar solo los procustos que cumplan con los criterios de la busqueda|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón 'Products'|Se muestra la sección 'All Products' y la lista de productos sera visible|
+|2    |Ingresar el nombre de un producto en el campo 'Search Product'|El sistema acepta los datos|
+|3    |Hacer clic en el botón de busqueda | Solo se mostra el producto buscado|
+
+### Testcase 11
+
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-11|Realizar suscripcion |Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer scroll hasta el pie de pagina|Se muestra la sección se sucripción|
+|2    |Ingresar email en el campo 'Your mail address'|Se redirigira a la vista con los detalles del producto, mostrandose el product name, category, price, availability, condition, brand|
 
 
 
