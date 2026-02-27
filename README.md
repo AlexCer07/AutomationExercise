@@ -155,12 +155,48 @@ Conexión a Internet
 
 |ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
 |---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-11|Realizar suscripcion |Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
+|TC-REG-11|Realizar suscripcion |Home -  Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
 
 |Pasos|Acción|Resultado esperado|
 |-----|------|------------------|
-|1    |Hacer scroll hasta el pie de pagina|Se muestra la sección se sucripción|
-|2    |Ingresar email en el campo 'Your mail address'|Se redirigira a la vista con los detalles del producto, mostrandose el product name, category, price, availability, condition, brand|
+|1    |Hacer scroll hasta el pie de pagina|Se muestra la sección se suscripción|
+|2    |Ingresar email en el campo 'Your mail address'|El sistema acepta los datos|
+|3    |Hacer clic en el botón arrow que se encuentra a lado del campo 'Your mail address'|Se muestra el mensaje 'You have been successfully subscribed!' |
+
+
+### Testcase 12
+
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-12|Realizar suscripcion |Cart -  Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón 'Cart'|Se muestra los productos que se han agregado al carrito de compras|
+|2    |Hacer scroll hasta el pie de pagina|Se muestra la sección se suscripción|
+|3    |Ingresar email en el campo 'Your mail address'|El sistema acepta los datos|
+|4    |Hacer clic en el botón arrow que se encuentra a lado del campo 'Your mail address'|Se muestra el mensaje 'You have been successfully subscribed!' |
+
+
+### Testcase 12
+
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-12|Realizar suscripcion |Products - Cart|Alta     |Precondición PC-01 cumplida|Email valido |Se deben agregar productos al carrito de compras|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón products|Se muestra la sección 'All Products' y la lista de productos sera visible|
+|2    |Poner el cursor sobre el primer producto|Se mostrara un recuadro naranja sobre el producto con el botón 'Add to cart'|
+|3    |Hacer clic en el botón 'Add to cart'|Se mostra un pop up indicando que el producto fue agrega|
+|4    |Hacer clic en el botón 'Continue shopping'|Se cerrara el pop up|
+|5    |Poner el cursor sobre el segundo producto|Se mostrara un recuadro naranja sobre el producto con el botón 'Add to cart'|
+|6    |Hacer clic en el botón 'Add to cart'|Se mostra un pop up indicando que el producto fue agrega|
+|7    |Hacer clic en el botón 'view Cart'|Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar|
+
+
+
+
 
 
 
