@@ -178,11 +178,11 @@ Conexión a Internet
 |4    |Hacer clic en el botón arrow que se encuentra a lado del campo 'Your mail address'|Se muestra el mensaje 'You have been successfully subscribed!' |
 
 
-### Testcase 12
+### Testcase 13
 
 |ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
 |---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-12|Realizar suscripcion |Products - Cart|Alta     |Precondición PC-01 cumplida|Email valido |Se deben agregar productos al carrito de compras|
+|TC-REG-13|Agregar produtos a carrito de compras |Products - Cart|Alta     |Precondición PC-01 cumplida|Email valido |Se deben agregar productos al carrito de compras|
 
 |Pasos|Acción|Resultado esperado|
 |-----|------|------------------|
@@ -195,16 +195,34 @@ Conexión a Internet
 |7    |Hacer clic en el botón 'view Cart'|Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar|
 
 
+### Testcase 14
+
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-14|Agregar mas de un mismo tipo de produto a carrito de compras |Detail product -Cart|Alta     |Precondición PC-01 cumplida|Email valido |Se deben agregar productos al carrito de compras|
+
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón 'view product' de cualquier producto|Se redirigira a la vista con los detalles del producto, mostrandose el product name, category, price, availability, condition, brand |
+|2    |Ingresar 4 en el campo de quatity|El sistema acepta los datos|
+|3    |Hacer clic en el botón 'Add to cart'|Se mostra un pop up indicando que el producto fue agrega|
+|4    |Hacer clic en el botón 'view Cart'|Se mostrara la pagina del carrito de compras con la cantidad de productos agregados y el total a pagar|
 
 
+### Testcase 15
 
+|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|----------------|------|---------|--------------|---------------|------------------|
+|TC-REG-15|Agregar mas de un mismo tipo de produto a carrito de compras |Detail product -Cart|Alta     |Precondición PC-01 cumplida|Email valido |Se deben agregar productos al carrito de compras|
 
-
-
-
-
-
-
+|Pasos|Acción|Resultado esperado|
+|-----|------|------------------|
+|1    |Hacer clic en el botón 'Add to cart' de cualquier producto|Se mostra un pop up indicando que el producto fue agrega|
+|2    |Hacer clic en el botón 'Continue shopping'||
+|3    |Hacer clic en el botón 'Cart'||
+|4    |Hacer clic en el botón 'Proceed To Checkout'||
+|5    |Hacer clic en el botón 'Register / Login'||
+|6    |Ingresar name y email en la |
 
 ## 📂 Estructura del proyecto
 
