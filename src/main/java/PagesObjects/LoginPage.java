@@ -88,7 +88,7 @@ public class LoginPage extends AbstractElements {
 
     //account Created
 
-    @FindBy(css = "h2[data-qa='account-created']")
+    @FindBy(css = "h2[data-qa='account-created'] b")
     WebElement accountCreatedMsg;
 
     @FindBy(css = "a[data-qa='continue-button']")
@@ -178,9 +178,10 @@ public class LoginPage extends AbstractElements {
 
     public String accountCreated(){
         waitForWebElementToAppear(accountCreatedMsg);
+        String msg = accountCreatedMsg.getText();
         continueButton.click();
 
-        return accountCreatedMsg.getText();
+        return msg;
 
     }
 

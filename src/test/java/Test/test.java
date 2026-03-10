@@ -1,8 +1,6 @@
 package Test;
 
-import PagesObjects.ContactUsPage;
-import PagesObjects.HomePage;
-import PagesObjects.LoginPage;
+import PagesObjects.*;
 import TestComponents.BaseTest;
 import com.github.javafaker.Faker;
 import org.testng.Assert;
@@ -23,7 +21,8 @@ public class test extends BaseTest {
 
         Map<String, String> info = new HashMap<>();
         info.put("title","mrs.");
-        info.put("password","PasswordTest123.");
+        //info.put("password","PasswordTest123.");
+        info.put("password", fakerInfo.internet().password());
         info.put("birthday","07-30-1987");
         info.put("firstName", fakerInfo.name().firstName());
         info.put("lastName", fakerInfo.name().lastName());
@@ -38,17 +37,29 @@ public class test extends BaseTest {
 
         loginPage.informationAccount(info);
 
-        String accountCreatedMsg = loginPage.accountCreated();
 
+        String accountCreatedMsg = loginPage.accountCreated();
         Assert.assertEquals(accountCreatedMsg, "ACCOUNT CREATED!");
+
+        loginPage.closeAdsIfPresent();
+
+        String userLoggedMsg = loginPage.userLogged();
+        Assert.assertEquals(userLoggedMsg, "Logged in as test");
+
+        loginPage.deleteAccount();
+        String accountDeletedMsg = loginPage.accountDeleted();
+        Assert.assertEquals(accountDeletedMsg, "ACCOUNT DELETED!");
 
     }
 
     @Test
     public void case2SuccessLogin(){
+        //Redundant
         LoginPage loginPage = homePage.goToLoginPage();
 
         loginPage.logIn("test454@test.com", "test");
+        String userLoggedMsg = loginPage.userLogged();
+        Assert.assertEquals(userLoggedMsg, "Logged in as test");
     }
 
     @Test
@@ -71,7 +82,8 @@ public class test extends BaseTest {
         Assert.assertEquals(userLogged, "Logged in as test",
                 "Test Case failed, usser not find");
 
-        loginPage.userLogut();
+        String url = loginPage.userLogut();
+        Assert.assertEquals("https://automationexercise.com/login", url);
 
     }
 
@@ -105,6 +117,23 @@ public class test extends BaseTest {
 
         Assert.assertEquals(urlHomePage, "https://automationexercise.com/");
 
+
+    }
+
+    @Test
+    public void case7TestCasePage(){
+        TestCasePage testCasePage = homePage.goToTestCase();
+        String url = testCasePage.pageSuccessfully();
+        Assert.assertEquals("https://automationexercise.com/test_cases", url);
+
+    }
+
+    @Test
+    public void case8productDetails(){
+        ProductPage productPage = homePage.goToProductPage();
+
+        boolean allProductsView = productPage.allProductsSuccessfully();
+        Assert.assertTrue(allProductsView);
 
     }
 }

@@ -2,14 +2,16 @@ package AbstractElements;
 
 import PagesObjects.ContactUsPage;
 import PagesObjects.LoginPage;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import PagesObjects.ProductPage;
+import PagesObjects.TestCasePage;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class AbstractElements {
 
@@ -31,6 +33,9 @@ public class AbstractElements {
     @FindBy (css = "a[href='/contact_us']")
         WebElement contactUsButton;
 
+    @FindBy (css = "a[href='/test_cases']")
+    WebElement testCaseButton;
+
     @FindBy(xpath = "//a[contains(text(), ' Logged in as ')]")
     WebElement userLoggedElement;
 
@@ -38,8 +43,9 @@ public class AbstractElements {
     WebElement deleteAccount;
 
 
-    public void goToProductPage(){
+    public ProductPage goToProductPage(){
         productButton.click();
+        return new ProductPage(driver);
     }
 
     public LoginPage goToLoginPage(){
@@ -53,13 +59,20 @@ public class AbstractElements {
         return new ContactUsPage(driver);
     }
 
+    public TestCasePage goToTestCase(){
+        testCaseButton.click();
+        return new TestCasePage(driver);
+    }
+
     public String userLogged(){
         return userLoggedElement.getText();
     }
 
-    public void userLogut(){
+    public String userLogut(){
         logoutButton.click();
         waitToUrlContain("/login");
+
+        return driver.getCurrentUrl();
     }
 
     public void deleteAccount(){
@@ -76,6 +89,12 @@ public class AbstractElements {
         wait.until(ExpectedConditions.visibilityOf(ele));
     }
 
+    public void waitForWebElementListToAppear(List<WebElement> listElements){
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfAllElements(listElements));
+    }
+
     public void waitForUrlBe(String url){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe(url));
@@ -85,4 +104,51 @@ public class AbstractElements {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.urlContains(path));
     }
+
+    public void closeAdsIfPresent(){
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        try{
+
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("iframe")));
+
+            for (WebElement iframe : driver.findElements(By.tagName("iframe"))){
+
+                try {
+                    driver.switchTo().frame(iframe);
+
+                    WebElement closeAd = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[aria-label='Close ad']")));
+
+                    closeAd.click();
+                    driver.switchTo().defaultContent();
+                    return;
+                }catch (TimeoutException | NoSuchElementException e){
+                    driver.switchTo().defaultContent();
+                }
+            }
+        }catch (TimeoutException e){
+
+        }
+
+
+
+        /*try {
+            new WebDriverWait(driver, Duration.ofSeconds(5))
+                    .until(ExpectedConditions.elementToBeClickable(
+                            By.cssSelector("[aria-label='Close ad']")
+                    )).click();
+        }catch (TimeoutException ignored){}*/
+    }
+
+
+    public void waitForPageLoad() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(d ->
+                        ((JavascriptExecutor) d)
+                                .executeScript("return document.readyState")
+                                .equals("complete")
+                );
+    }
+
 }
