@@ -36,7 +36,7 @@ Conexión a Internet
 
 |Pasos|Acción                    |Resultado esperado|
 |-----|--------------------------|----------------------|
-|1    |Hacer clic en el botón 'Signup / login'| Se muestra la sección de 'New user Signup!'
+|1    |Hacer clic en el botón 'Signup / login'| Se muestra la sección de 'New user Signup!'|
 |2    |Ingresar nombre y email validos en los campos correspondiente de la sección|El sistema acepta los dato|
 |3    |Hacer clic en el botón Signup|Se muestra la pantalla 'Enter account information'|
 |4    |Completar la información obligatoria de la cuenta |Los campos se validan correctamente|
@@ -85,11 +85,11 @@ Conexión a Internet
 |----------|-----------------|------|---------|--------------|---------------|------------------|
 |TC-REG-05 |Registrar usuario con email registrado previamente|Registro |Alta     |Precondicion PC-01 cumplida|email valido y registrado en el sistema|La cuenta no sera creada|
 
-|Pasos|Acción                    |Resultado esperado|
-|-----|--------------------------|----------------------|
-|1    |Hacer clic en el botón 'Signup / login'| Se muestra la sección de 'New user Signup!'
-|2    |Ingresar nombre y email validos de una cuenta registrada previamente en los campos correspondiente de la sección|El sistema acepta los dato|
-|3    |Hacer clic en el botón Signup|No se muestra la pantalla 'Enter account information'.Se muestra un mensaje indicando que el email ya se encuentra registrado en el sistema|
+| Pasos |Acción                    | Resultado esperado                                      |
+|-------|--------------------------|---------------------------------------------------------|
+| 1     |Hacer clic en el botón 'Signup / login'| Se muestra la sección de 'New user Signup!'|
+| 2     |Ingresar nombre y email validos de una cuenta registrada previamente en los campos correspondiente de la sección| El sistema acepta los dato |
+| 3     |Hacer clic en el botón Signup| No se muestra la pantalla 'Enter account information'. Se muestra un mensaje indicando que el email ya se encuentra registrado en el sistema |
 
 ### Test case 6
 |ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
@@ -211,18 +211,95 @@ Conexión a Internet
 
 ### Testcase 15
 
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-15|Agregar mas de un mismo tipo de produto a carrito de compras |Detail product -Cart|Alta     |Precondición PC-01 cumplida|Email valido |Se deben agregar productos al carrito de compras|
+|ID       | Descripción                                             | Modulo         | Prioridad |Precondiciones| Datos de prueba                          | Resultado esperado                  |
+|---------|---------------------------------------------------------|----------------|-----------|--------------|------------------------------------------|-------------------------------------|
+|TC-REG-15| Hacer una order, registrarse durante el proceso de pago | Cart - payment | Alta      |Precondición PC-01 cumplida| Email valido no registrado en el sistema | Se debe realizar el proceso de pago |
 
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Add to cart' de cualquier producto|Se mostra un pop up indicando que el producto fue agrega|
-|2    |Hacer clic en el botón 'Continue shopping'||
-|3    |Hacer clic en el botón 'Cart'||
-|4    |Hacer clic en el botón 'Proceed To Checkout'||
-|5    |Hacer clic en el botón 'Register / Login'||
-|6    |Ingresar name y email en la |
+| Pasos | Acción                                                                                  | Resultado esperado                                                                                                                                                             |
+|-------|-----------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1     | Hacer clic en el botón 'Add to cart' de cualquier producto                              | Se mostra un pop up indicando que el producto fue agregado                                                                                                                     |
+| 2     | Hacer clic en el botón 'Continue shopping'                                              | Se cerrara el pop up                                                                                                                                                           |
+| 3     | Hacer clic en el botón 'Cart'                                                           | Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar                                                                                 |
+| 4     | Hacer clic en el botón 'Proceed To Checkout'                                            | Se mostrara un pop up indicando que se debe iniciar sesion para poder continuar con la compra                                                                                  |
+| 5     | Hacer clic en el botón 'Register / Login'                                               | Se muestra la sección de 'New user Signup!'                                                                                                                                    |
+| 6     | Ingresar nombre y email validos en los campos correspondiente de la sección             | El sistema acepta los datos                                                                                                                                                    |
+| 7     | Hacer clic en el botón Signup                                                           | Se muestra la pantalla 'Enter account information'                                                                                                                             |
+| 8     | Completar la información obligatoria de la cuenta                                       | Los campos se validan correctamente                                                                                                                                            |
+| 9     | Completar la información de dirección obligatoria                                       | Información aceptada                                                                                                                                                           |
+| 10    | Precionar el botón Create Account                                                       | Se muestra una pantalla con el mensaje 'Account Created!'                                                                                                                      |
+| 11    | Hacer clic en el botón continuar                                                        | El usuario queda autenticado. Se muestra entre las opciones del header el usuario con el que se entra autenticado                                                              |
+| 12    | Hacer clic en el botón 'Cart'                                                           | Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar                                                                                 |
+| 13    | Hacer clic en el botón 'Proceed To Checkout'                                            | Se mostrara la sección address detail con la dirección de envio y facturación. tambien se mostrara la sección review order, con el resumen de los articulos seleccionados      |
+| 14    | Ingresar una descripción en el area de texto, para agregar un comentario sobr la orden  | El sistema acepta los datos                                                                                                                                                    |
+| 15    | Hacer clic en el botón 'Place order'                                                    | Se mostrara se sección payment                                                                                                                                                 |
+| 16    | Ingresar los datos de la forma de pago(name on card, card number, cvc, expiration date) | El sistema acepta los datos                                                                                                                                                    |
+| 17    | Hacer clic en el botón 'pay an confirm'                                                 | Se muestra el mensaje 'Your order has been placed successfully!' y se redirige automaticamente a una pantalla con el mensaje 'Congratulations! Your order has been confirmed!' |
+
+
+### Testcase 16
+
+| ID        | Descripción                         | Modulo         | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                  |
+|-----------|-------------------------------------|----------------|-----------|--------------|---------------------------------|-------------------------------------|
+| TC-REG-16 | Hacer una order con usuario logeado | Cart - payment | Alta      |Precondición PC-01 cumplida| Cuenta registrada en el sistema | Se debe realizar el proceso de pago |
+
+| Pasos | Acción                                                                                  | Resultado esperado                                                                                                                                                             |
+|-------|-----------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1     |Hacer clic en el botón 'Signup / login' | Se muestra la sección 'Login to your account' |
+| 2     |Ingresar el email y contraseña de una cuenta ya registrada en los campos correspondientes de la sección|El sistema acepta  los datos|
+| 3     |Hacer clic en el botón 'login' | El usuario queda autenticado. Se muestra entre las opciones del header el usuario con el que se entra autenticado|
+| 4     | Hacer clic en el botón 'Add to cart' de cualquier producto                              | Se mostra un pop up indicando que el producto fue agregado                                                                                                                     |
+| 5     | Hacer clic en el botón 'Continue shopping'                                              | Se cerrara el pop up                                                                                                                                                           |
+| 6     | Hacer clic en el botón 'Cart'                                                           | Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar                                                                                 |
+| 7     | Hacer clic en el botón 'Proceed To Checkout'                                            | Se mostrara la sección address detail con la dirección de envio y facturación. tambien se mostrara la sección review order, con el resumen de los articulos seleccionados      |
+| 8     | Ingresar una descripción en el area de texto, para agregar un comentario sobre la orden | El sistema acepta los datos                                                                                                                                                    |
+| 9     | Hacer clic en el botón 'Place order'                                                    | Se mostrara se sección payment                                                                                                                                                 |
+| 10    | Ingresar los datos de la forma de pago(name on card, card number, cvc, expiration date) | El sistema acepta los datos                                                                                                                                                    |
+| 11    | Hacer clic en el botón 'pay an confirm'                                                 | Se muestra el mensaje 'Your order has been placed successfully!' y se redirige automaticamente a una pantalla con el mensaje 'Congratulations! Your order has been confirmed!' |
+
+
+### Testcase 17
+
+| ID        | Descripción                   | Modulo         | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                  |
+|-----------|-------------------------------|----------------|-----------|--------------|---------------------------------|-------------------------------------|
+| TC-REG-17 | Remover productos del carrito | Cart - payment | Alta      |Precondición PC-01 cumplida| | El producto no se mostrara en el carrito de compras |
+
+| Pasos | Acción                                                     | Resultado esperado                                                                                                                         |
+|-------|------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| 1     |Poner el cursor sobre el primer producto|Se mostrara un recuadro naranja sobre el producto con el botón 'Add to cart'|
+| 2     |Hacer clic en el botón 'Add to cart'|Se mostra un pop up indicando que el producto fue agrega|
+| 3     |Hacer clic en el botón 'Continue shopping'|Se cerrara el pop up|
+| 4     |Poner el cursor sobre el segundo producto|Se mostrara un recuadro naranja sobre el producto con el botón 'Add to cart'|
+| 5     |Hacer clic en el botón 'Add to cart'|Se mostra un pop up indicando que el producto fue agrega|
+| 6     |Hacer clic en el botón 'view Cart'|Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar|
+| 7     | Hacer clic en el botón 'X' de un producto                  | Ya no se mostrara el producto en el carrito de compras, el monto a pagar sera el correspondiente con lo productos que siguen en el carrito |
+
+
+### Testcase 18
+
+| ID        | Descripción                        | Modulo   | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                               |
+|-----------|------------------------------------|----------|-----------|--------------|---------------------------------|------------------------------------------------------------------|
+| TC-REG-18 | Visualizar categorias de productos | Products | Alta      |Precondición PC-01 cumplida| | Se mostraran unicamente los productos correspondiente con la categoria seleccionada |
+
+| Pasos | Acción                                                             | Resultado esperado                                                                                                                                                                              |
+|-------|--------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1     | Hacer clic en la categoria 'Women'                                 | Se mostrara una lista con los nombres tipos de productos que tiene la categoria women                                                                                                           |
+| 2     | Hacer clic en el uno de los productos que tiene la categoria women | Se mostra la sección 'Women - nameProduct Products' (nameProduct, siendo el nombre de la marca seleccionada), mostrando unicamente los productos correspondientes con la categoria seleccionada |
+| 2     | Hacer clic en la categoria 'Men'                                   | Se mostrara una lista con los nombres tipos de productos que tiene la categoria men                                                                                                             |
+| 3     | Hacer clic en el uno de los productos que tiene la categoria men   | Se mostra la sección 'Men - nameProduct Products' (nameProduct, siendo el nombre de la marca seleccionada), mostrando unicamente los productos correspondientes con la categoria seleccionada   |
+
+
+### Testcase 19
+
+| ID        | Descripción                    | Modulo   | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                           |
+|-----------|--------------------------------|----------|-----------|--------------|---------------------------------|--------------------------------------------------------------|
+| TC-REG-19 | Visualizar marcas de productos | Products | Alta      |Precondición PC-01 cumplida| | Se mostraran unicamente los productos correspondiente con la marca seleccionada |
+
+| Pasos | Acción                           | Resultado esperado                                                                                                                                                                          |
+|-------|----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1     | Hacer clic en una marca deseada  | Se mostra la sección 'Brand - nameBrand Products' (nameBrand, siendo el nombre de la marca seleccionada), mostrando unicamente los productos correspondientes con la marca seleccionada     |
+| 3     | Hacer clic en otra marca deseada | Se mostra la sección 'Brand - nameBrand Products' (nameBrand, siendo el nombre de la marca seleccionada), mostrando unicamente los productos correspondientes con la categoria seleccionada |
+
+
 
 ## 📂 Estructura del proyecto
 
