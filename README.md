@@ -339,7 +339,7 @@ Conexión a Internet
 
 | Pasos | Acción                                                          | Resultado esperado                                                                            |
 |-------|-----------------------------------------------------------------|------------------------------------------------------------------------------------------------|
-| 1     | Hacer scroll hacia abajo, hasta el final de la pagina           | Se muestra la sección 'RECOMMENDED ITEMS' con algunos productos                        n       |
+| 1     | Hacer scroll hacia abajo, hasta el final de la pagina           | Se muestra la sección 'RECOMMENDED ITEMS' con algunos productos                              |
 | 2     | Hacer clic en el botón 'View Product'                           | Se redirigira a la vista con los detalles del producto y la sección 'Write your review'        |
 | 3     | Hacer clic en el botón 'Add to cart' de un producto recomendado | Se mostra un pop up indicando que el producto fue agrega                                       |
 | 4     | Hacer clic en el botón 'view Cart'                              | Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar |
@@ -367,6 +367,17 @@ Conexión a Internet
 | 12    | Hacer clic en el botón 'Download Invoice'                                                               | Se descargara un archivo .txt que contendra el nombre del usuario y el monto a pagar                                                                                           |
 | 13    | Hacer clic en el botón 'Continue'                                                                       | Se redireccionara automaticamente a la vista Home                                                                                                                              |
 
+
+### Testcase 24
+
+| ID        | Descripción                    | Modulo   | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                           |
+|-----------|--------------------------------|----------|-----------|--------------|---------------------------------|--------------------------------------------------------------|
+| TC-REG-19 | Desplazarce a traves de la pagina usando las flechas direccionales | Home | Baja     |Precondición PC-01 cumplida| | Se desplazara al final y al principio de la pagina |
+
+| Pasos | Acción                           | Resultado esperado                                                                                                                                                                          |
+|-------|----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1     | Mantener precionada la tecla de flecha hacia abajo hasta el pie de pagina| Se mostrara la sección 'SUBSCRIPTION'|
+| 2     | Mantener precionada la tecla de flecha hacia arriba hasta el inicio de la pagina | Se mostrara el texto 'Full-Fledged practice website for Automation Engineers' |
 
 ## 📂 Estructura del proyecto
 
