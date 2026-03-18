@@ -25,9 +25,9 @@ Conexión a Internet
 
 ## 🧪 Casos de  Pruebas
 ### Precondicion generales
-|ID|Descripción          |Pasos|Resultado esperado|
-|------|---------------------|-----|------------------|
-|PC-01 |La aplicacion we se encuentra disponible y accesible mediante un navegador(https://automationexercise.com/)|
+| ID    | Descripción                                                                                                 |
+|-------|-------------------------------------------------------------------------------------------------------------|
+| PC-01 | La aplicacion we se encuentra disponible y accesible mediante un navegador(https://automationexercise.com/) |
 
 ### Test Case 1
 |ID        |Descripcion      |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
@@ -153,9 +153,9 @@ Conexión a Internet
 
 ### Testcase 11
 
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-11|Realizar suscripcion |Home -  Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
+|ID       | Descripción                                   |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|-----------------------------------------------|------|---------|--------------|---------------|------------------|
+|TC-REG-11| Realizar suscripcion desde la vista principal |Home -  Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
 
 |Pasos|Acción|Resultado esperado|
 |-----|------|------------------|
@@ -166,9 +166,9 @@ Conexión a Internet
 
 ### Testcase 12
 
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-12|Realizar suscripcion |Cart -  Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
+|ID       | Descripción                                      |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
+|---------|--------------------------------------------------|------|---------|--------------|---------------|------------------|
+|TC-REG-12| Realizar suscripcion desde el carrito de compras |Cart -  Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
 
 |Pasos|Acción|Resultado esperado|
 |-----|------|------------------|
@@ -292,13 +292,80 @@ Conexión a Internet
 
 | ID        | Descripción                    | Modulo   | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                           |
 |-----------|--------------------------------|----------|-----------|--------------|---------------------------------|--------------------------------------------------------------|
-| TC-REG-19 | Visualizar marcas de productos | Products | Alta      |Precondición PC-01 cumplida| | Se mostraran unicamente los productos correspondiente con la marca seleccionada |
+| TC-REG-19 | Visualizar marcas de productos | Products | Media     |Precondición PC-01 cumplida| | Se mostraran unicamente los productos correspondiente con la marca seleccionada |
 
 | Pasos | Acción                           | Resultado esperado                                                                                                                                                                          |
 |-------|----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1     | Hacer clic en una marca deseada  | Se mostra la sección 'Brand - nameBrand Products' (nameBrand, siendo el nombre de la marca seleccionada), mostrando unicamente los productos correspondientes con la marca seleccionada     |
-| 3     | Hacer clic en otra marca deseada | Se mostra la sección 'Brand - nameBrand Products' (nameBrand, siendo el nombre de la marca seleccionada), mostrando unicamente los productos correspondientes con la categoria seleccionada |
+| 2     | Hacer clic en otra marca deseada | Se mostra la sección 'Brand - nameBrand Products' (nameBrand, siendo el nombre de la marca seleccionada), mostrando unicamente los productos correspondientes con la categoria seleccionada |
 
+### Testcase 20
+
+| ID        | Descripción                                           | Modulo          | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                                                                                        |
+|-----------|-------------------------------------------------------|-----------------|-----------|--------------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| TC-REG-20 | Realizar una busqueda y agregar al carrito de compras | Products - Cart | Alta      |Precondición PC-01 cumplida| | Se mostraran unicamente los productos correspondiente con la busqueda realizada y se podran agregar al carrito de compras |
+
+| Pasos | Acción                                                    | Resultado esperado                                                                                                         |
+|-------|-----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| 1     | Hacer clic en el boton 'Products'                         | Se muestra la sección 'All Products' y la lista de productos sera visible                                                  |
+| 2     | Ingresar el nombre de un producto en el campo de busqueda | El sistema acepta los datos                                                                                                |
+| 3     | Hacer clic en el botón de buscar (icono de lupa)          | Se mostra la sección 'Searched Products', mostrando unicamente los productos correspondientes con la busqueda seleccionada |
+| 4     | Poner el cursor sobre el primer producto                  | Se mostrara un recuadro naranja sobre el producto con el botón 'Add to cart'                                               |
+| 5     | Hacer clic en el botón 'Add to cart'                      | Se mostra un pop up indicando que el producto fue agrega                                                                   |
+| 6     | Hacer clic en el botón 'view Cart'                        | Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar                             |
+
+
+### Testcase 21
+
+| ID        | Descripción                         | Modulo          | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                          |
+|-----------|-------------------------------------|-----------------|-----------|--------------|---------------------------------|---------------------------------------------|
+| TC-REG-21 | Agregar una opinion de un producto  | Products | Media      |Precondición PC-01 cumplida| email valido | Se agregara una reseaña de un producto de forma exitosa |
+
+| Pasos | Acción                                                           | Resultado esperado                                                                      |
+|-------|------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| 1     | Hacer clic en el boton 'Products'                                | Se muestra la sección 'All Products' y la lista de productos sera visible               |
+| 2     | Hacer clic en el botón 'View Product'                            | Se redirigira a la vista con los detalles del producto y la sección 'Write your review' |
+| 3     | Ingresar el nombre del usuario en el campo your name             | El sistema acepta los datos                                                             |
+| 4     | Ingresar el email del usuario en el campo email address          | El sistema acepta los datos                                                             |
+| 5     | Ingresar una opinion del producto en el campo 'Add Review here!' | El sistema acepta los datos                                                             |
+| 6     | Hacer clic en el botón 'submit'                                  | Se mustra el mensaje 'Thank you for your review.'                                       |
+
+
+### Testcase 22
+
+| ID        | Descripción                                                              | Modulo          | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                            |
+|-----------|--------------------------------------------------------------------------|-----------------|-----|--------------|---------------------------------|-----------------------------------------------|
+| TC-REG-22 | Agregar una producto al carrito de compras de los productos recomendados | Products | Media |Precondición PC-01 cumplida| | Se agregara el producto al carrito de compras |
+
+| Pasos | Acción                                                          | Resultado esperado                                                                            |
+|-------|-----------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| 1     | Hacer scroll hacia abajo, hasta el final de la pagina           | Se muestra la sección 'RECOMMENDED ITEMS' con algunos productos                        n       |
+| 2     | Hacer clic en el botón 'View Product'                           | Se redirigira a la vista con los detalles del producto y la sección 'Write your review'        |
+| 3     | Hacer clic en el botón 'Add to cart' de un producto recomendado | Se mostra un pop up indicando que el producto fue agrega                                       |
+| 4     | Hacer clic en el botón 'view Cart'                              | Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar |
+
+
+### Testcase 23
+
+| ID        | Descripción                                      | Modulo         | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                                                                          |
+|-----------|--------------------------------------------------|----------------|-----------|--------------|---------------------------------|-------------------------------------------------------------------------------------------------------------|
+| TC-REG-23 | Descargar factura despues de realizar una compra | Cart - payment | Alta      |Precondición PC-01 cumplida| Cuenta registrada en el sistema | Se dede descargar la factura en el equipo del usuario, la factura debe contener la información de la compra |
+
+| Pasos | Acción                                                                                                  | Resultado esperado                                                                                                                                                             |
+|-------|---------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1     | Hacer clic en el botón 'Signup / login'                                                                 | Se muestra la sección 'Login to your account'                                                                                                                                  |
+| 2     | Ingresar el email y contraseña de una cuenta ya registrada en los campos correspondientes de la sección | El sistema acepta  los datos                                                                                                                                                   |
+| 3     | Hacer clic en el botón 'login'                                                                          | El usuario queda autenticado. Se muestra entre las opciones del header el usuario con el que se entra autenticado                                                              |
+| 4     | Hacer clic en el botón 'Add to cart' de cualquier producto                                              | Se mostra un pop up indicando que el producto fue agregado                                                                                                                     |
+| 5     | Hacer clic en el botón 'Continue shopping'                                                              | Se cerrara el pop up                                                                                                                                                           |
+| 6     | Hacer clic en el botón 'Cart'                                                                           | Se mostrara la pagina del carrito de compras con los productos agregados, con el total a pagar                                                                                 |
+| 7     | Hacer clic en el botón 'Proceed To Checkout'                                                            | Se mostrara la sección address detail con la dirección de envio y facturación. tambien se mostrara la sección review order, con el resumen de los articulos seleccionados      |
+| 8     | Ingresar una descripción en el area de texto, para agregar un comentario sobre la orden                 | El sistema acepta los datos                                                                                                                                                    |
+| 9     | Hacer clic en el botón 'Place order'                                                                    | Se mostrara se sección payment                                                                                                                                                 |
+| 10    | Ingresar los datos de la forma de pago(name on card, card number, cvc, expiration date)                 | El sistema acepta los datos                                                                                                                                                    |
+| 11    | Hacer clic en el botón 'pay an confirm'                                                                 | Se muestra el mensaje 'Your order has been placed successfully!' y se redirige automaticamente a una pantalla con el mensaje 'Congratulations! Your order has been confirmed!' |
+| 12    | Hacer clic en el botón 'Download Invoice'                                                               | Se descargara un archivo .txt que contendra el nombre del usuario y el monto a pagar                                                                                           |
+| 13    | Hacer clic en el botón 'Continue'                                                                       | Se redireccionara automaticamente a la vista Home                                                                                                                              |
 
 
 ## 📂 Estructura del proyecto
