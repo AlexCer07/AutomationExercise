@@ -1,27 +1,83 @@
 # AutomationExercise
 
-Proyecto realizado como practica para automatiación con el Framework Selenium y TestNG con Java. El sitio web a automatizar es un ecommerce diseñado para pruebas (https://automationexercise.com/), el sitio web es propiedad de un tercero.
+Proyecto realizado como práctica de automatización de pruebas.
+
+Este proyecto valida flujos críticos de un eCommerce utilizando Selenium WebDriver + TestNG en Java, aplicando buenas prácticas de diseño de pruebas y automatización.
+
+🔗 Sistema bajo prueba: https://automationexercise.com/⁠�
+
+El sistema bajo prueba es un eCommerce público diseñado específicamente para pruebas:
+👉 https://automationexercise.com/
+
+
+>> ⚠️ Este sitio es propiedad de un tercero y se utiliza únicamente con fines educativo, por lo que la responsabilidad del mantenimiento del sitio está fuera de alcance.
 
 ## 🚀 Características
 
+* Automatización de flujos funcionales de un eCommerce
+
+* Ejecución de pruebas mediante Selenium Web Driver
+
+* Manejo de Page Object Model (POM)
+
+* Uso de Data Providers para pruebas parametrizadas
+
+* Validaciones de comportamiento del sistema mediante TestNG
+
+* Reportes básicos de ejecución
+
 ## 🧱 Tecnologías
 
-Java 17
-Selenium
-TestNG
-Maven
+* Java 17
+* Selenium
+* TestNG
+* Maven
 
 ## 📋 Requisitos
 
-Java 17
-Maven
-Conexión a Internet
+Antes de ejecutar el proyecto asegúrate de tener instalado:
+
+* Java 17
+* Maven
+* Navegador Google Chrome
+* ChromeDriver compatible con tu versión de Chrome
+* Conexión a Internet
 
 ## ⚙️ Instalación
 
+1. Clona el repositorio:
+Bash
+git clone https://github.com/tu-usuario/AutomationExercise.git
+
+2. Ingresa al proyecto:
+Bash
+cd AutomationExercise
+
+3. Instala las dependencias con Maven:
+Bash
+mvn clean install
+
 ## ▶️ Ejecución
 
+Puedes ejecutar las pruebas de las siguientes formas:
+
+Desde Maven
+Bash
+mvn test
+
+Desde TestNG (IDE)
+1. Abre el proyecto en tu IDE (IntelliJ o Eclipse)
+2. Ubica el archivo testng.xml
+3. Ejecuta como TestNG Suite
+
 ## ✅ Reglas de negocio
+
+Algunas reglas consideradas en la automatización:
+
+* El usuario debe estar registrado para iniciar sesión
+* Los campos obligatorios no pueden estar vacíos
+* El sistema debe mostrar mensajes de error ante credenciales inválidas
+* Los productos agregados al carrito deben reflejarse correctamente
 
 ## 🧪 Casos de  Pruebas
 ### Precondicion generales
