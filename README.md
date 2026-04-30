@@ -4,13 +4,29 @@ Proyecto realizado como práctica de automatización de pruebas.
 
 Este proyecto valida flujos críticos de un eCommerce utilizando Selenium WebDriver + TestNG en Java, aplicando buenas prácticas de diseño de pruebas y automatización.
 
-🔗 Sistema bajo prueba: https://automationexercise.com/⁠�
-
-El sistema bajo prueba es un eCommerce público diseñado específicamente para pruebas:
-👉 https://automationexercise.com/
+🔗 Sistema bajo prueba: https://automationexercise.com/
 
 
 >> ⚠️ Este sitio es propiedad de un tercero y se utiliza únicamente con fines educativo, por lo que la responsabilidad del mantenimiento del sitio está fuera de alcance.
+
+# #🎯 Objetivo del proyecto
+
+Demostrar habilidades en:
+* Automatización de pruebas funcionales end-to-end
+* Diseño de frameworks de automatización escalables
+* Implementación de buenas prácticas (POM, separación de capas)
+* Validación de flujos críticos de negocio
+
+## 🧠 Enfoque de automatización
+Se implementa el patrón Page Object Model (POM) para:
+* Separar lógica de negocio y UI
+* Facilitar mantenimiento
+* Reutilizar componentes
+
+También se utilizan:
+* TestNG para organización de pruebas
+* Data Providers para pruebas parametrizadas
+* Assertions para validación de resultados
 
 ## 🚀 Características
 
