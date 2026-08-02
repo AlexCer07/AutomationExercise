@@ -2,6 +2,7 @@ package PagesObjects;
 
 import AbstractElements.AbstractElements;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,7 +45,7 @@ public class ContactUsPage extends AbstractElements {
     @FindBy(xpath = "//a[contains(@class, 'btn-success')]")
     WebElement homeButton;
 
-    public String fillOutForm(String name, String mail, String subject, String message, String pathFile){
+    public void fillOutForm(String name, String mail, String subject, String message, String pathFile){
 
         fieldName.sendKeys(name);
         fieldEmail.sendKeys(mail);
@@ -55,16 +56,19 @@ public class ContactUsPage extends AbstractElements {
 
         submitButton.click();
 
-        Alert alerta = driver.switchTo().alert();
-        alerta.accept();
+    }
 
+    public String successfullyMessage(){
         waitForWebElementToAppear(successMessage);
-
         return successMessage.getText();
     }
 
-    public String goHome(){
-        homeButton.click();
+    public String goHome() {
+        //waitCloseAd();
+        //homeButton.click();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", homeButton);
+
+
         waitForUrlBe("https://automationexercise.com/");
 
         String url = driver.getCurrentUrl();
