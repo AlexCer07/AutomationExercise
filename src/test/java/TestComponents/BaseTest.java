@@ -1,70 +1,75 @@
 package TestComponents;
 
-import AbstractElements.AbstractElements;
+import AbstractElements.AdHandler;
 import PagesObjects.HomePage;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BaseTest {
 
     public WebDriver driver;
     public HomePage homePage;
+    public AdHandler adHandler;
 
-    public WebDriver initioalizeDriver(){
+    //public String downloadPath = System.getProperty("user.dir") + "\\src\\test\\java\\downloads";
+    public String downloadPath = "C:\\Users\\alexc\\Downloads";
+    public WebDriver initializeDriver(){
 
-        driver = new ChromeDriver();
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", downloadPath);
+        prefs.put("download.prompt_for_download", false);
+
+        ChromeOptions options = new ChromeOptions();
+
+        options.addArguments("user-data-dir=D:/Test-Automation/chromeProfle");
+        options.addArguments("profile-directory=Automation");
+
+        options.setExperimentalOption("prefs", prefs);
+
+        driver = new ChromeDriver(options);
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.manage().window().maximize();
 
         return driver;
     }
 
-    public boolean checkPageLoad(){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        boolean pageLoaded = false;
 
-        for (int i = 0; i < 10; i++) { // Reintenta por unos segundos
-            String readyState = js.executeScript("return document.readyState").toString();
-            if (readyState.equals("complete")) {
-                pageLoaded = true;
-                break;
-            }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
-        return pageLoaded;
-    }
 
 
     @BeforeMethod (alwaysRun = true)
     public HomePage launchApplication(){
-        driver = initioalizeDriver();
+        driver = initializeDriver();
         homePage = new HomePage(driver);
+
         homePage.goTo();
 
-        int count = 1;
-        while (!checkPageLoad()){
-            if (count == 3){
-                System.exit(1);
-            }
-            count++;
-        }
+        // ✅ Cerrar anuncios al iniciar cada test
+        adHandler = new AdHandler(driver);
+        adHandler.closeAdsIfPresent();
 
         return homePage;
     }
 
-    @AfterMethod (alwaysRun = true)
+
+    //@AfterMethod (alwaysRun = true)
     public void tearDown(){
-        driver.close();
+        driver.quit();
     }
 }

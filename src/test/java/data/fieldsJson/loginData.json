@@ -1,0 +1,19 @@
+[
+    {
+        "username": "Alejandro",
+        "email": "alex.cs@test.com",
+        "password": "Test123.",
+        "title": "Mr.",
+        "birthday": "1995-07-08",
+        "firstName": "Alejandro",
+        "lastName": "Cervantes",
+        "company": "Test AC",
+        "address1": "744 Leonard Vista",
+        "address2": "Suite 797",
+        "country": "Israel",
+        "state": "Mississippi",
+        "city": "South Shannon",
+        "zipCode": "90797",
+        "mobileNumber": "801-084-0700"
+    }
+]
