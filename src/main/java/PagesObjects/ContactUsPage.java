@@ -1,7 +1,6 @@
 package PagesObjects;
 
 import AbstractElements.AbstractElements;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,8 +17,7 @@ public class ContactUsPage extends AbstractElements {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy (xpath = "//div[@class='contact-form']")
-    WebElement contactFrom;
+    //*********Elements***********
 
     @FindBy(css = "input[name='name']")
     WebElement fieldName;
@@ -45,7 +43,10 @@ public class ContactUsPage extends AbstractElements {
     @FindBy(xpath = "//a[contains(@class, 'btn-success')]")
     WebElement homeButton;
 
-    public void fillOutForm(String name, String mail, String subject, String message, String pathFile){
+    //***********Methods*************
+
+    //Se ingresan los datos de formulario de contacto
+    public void fillOutForm(String name, String mail, String subject, String message, String pathFile) {
 
         fieldName.sendKeys(name);
         fieldEmail.sendKeys(mail);
@@ -53,26 +54,27 @@ public class ContactUsPage extends AbstractElements {
         fieldMessage.sendKeys(message);
         uploadFileButton.sendKeys(pathFile);
 
+        log.info("Se llena el formulario de contacto");
+        log.debug("name: {}", name);
+        log.debug("mail: {}", mail);
+        log.debug("subject: {}", subject);
+        log.debug("message: {}", message);
+        log.debug("pathFile : {}", pathFile);
 
         submitButton.click();
-
     }
 
+    //Se obtiene el mensaje de formulario enviado exitosamente
     public String successfullyMessage(){
         waitForWebElementToAppear(successMessage);
+        log.info("Se obtiene mensaje de formulario llenado con exito");
         return successMessage.getText();
     }
 
+    //Se hace clic en el botón home
     public String goHome() {
-        //waitCloseAd();
-        //homeButton.click();
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", homeButton);
-
-
         waitForUrlBe("https://automationexercise.com/");
-
-        String url = driver.getCurrentUrl();
-        return url;
+        return driver.getCurrentUrl();
     }
-
 }

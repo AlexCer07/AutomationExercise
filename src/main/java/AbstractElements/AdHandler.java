@@ -1,17 +1,19 @@
 package AbstractElements;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
-import java.util.List;
 
-public class AdHandler {
+public class AdHandler extends AbstractElements {
 
-    private WebDriver driver;
+    private final WebDriver driver;
+    private final JavascriptExecutor js;
 
     public AdHandler(WebDriver driver) {
+        super(driver);
         this.driver = driver;
+        this.js = (JavascriptExecutor) driver;
     }
 
     public void closeAdsIfPresent() {
@@ -20,62 +22,163 @@ public class AdHandler {
         removeSideRailAds();
     }
 
+    public void closeAdsAfterClick() {
+
+        if (waitForPossibleAlert()) {
+            log.debug("Alerta detectada después del clic." + "Se omite limpieza de anuncios.");
+            return;
+        }
+        closeAdsIfPresent();
+    }
+
+    private boolean waitForPossibleAlert() {
+
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(500));
+            wait.until(ExpectedConditions.alertIsPresent());
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+
     // -------------------------------------------------------
-    // Vignette: pantalla completa — se elimina directo del DOM
-    // El botón "Close" está en un iframe cross-origin inaccesible,
-    // así que removemos el elemento contenedor desde el documento principal
+    // Vignette
     // -------------------------------------------------------
     private void removeVignetteAd() {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until(ExpectedConditions.presenceOfElementLocated(
-                    By.cssSelector("ins[data-vignette-loaded='true']")
-            ));
 
-            JavascriptExecutor js = (JavascriptExecutor) driver;
+        try {
             Long removed = (Long) js.executeScript(
-                    "var ads = document.querySelectorAll(\"ins[data-vignette-loaded='true']\");" +
-                            "ads.forEach(el => el.remove());" +
-                            "return ads.length;"
+                    """
+                    const selectors = [
+                        "ins[data-vignette-loaded='true']",
+                        "ins.adsbygoogle[data-vignette-loaded]",
+                        "div[id^='google_ads_iframe']",
+                        "iframe[id^='google_ads_iframe']",
+                        "div[id^='aswift_']"
+                    ];
+
+                    let removed = 0;
+
+                    selectors.forEach(selector => {
+
+                        document.querySelectorAll(selector)
+                            .forEach(element => {
+
+                                element.remove();
+                                removed++;
+
+                            });
+
+                    });
+
+                    return removed;
+                    """
+            );
+
+            /*
+             * Google Vignette puede dejar el hash:
+             * #google_vignette
+             * aunque el anuncio ya haya sido eliminado.
+             */
+            String url = driver.getCurrentUrl();
+
+            assert url != null;
+            if (url.contains("#google_vignette")) {
+
+                js.executeScript(
+                        """
+                        history.replaceState(
+                            null,
+                            '',
+                            window.location.pathname +
+                            window.location.search
+                        );
+                        """
+                );
+
+                log.debug("Hash #google_vignette eliminado.");
+            }
+
+            /*
+             * Algunos anuncios bloquean el scroll modificando
+             * estilos del body/html.
+             */
+            js.executeScript(
+                    """
+                    document.documentElement.style.overflow = '';
+                    document.body.style.overflow = '';
+                    document.body.style.position = '';
+                    """
             );
 
             if (removed != null && removed > 0) {
-                System.out.println("✅ Vignette ad eliminado del DOM (" + removed + " elemento/s).");
+                log.debug("Vignette eliminado ({} elemento/s).", removed);
             }
 
-        } catch (TimeoutException e) {
-            // No apareció vignette, continuar normalmente
         } catch (Exception e) {
-            System.out.println("ℹ️ removeVignetteAd: " + e.getMessage());
+            log.debug("removeVignetteAd: {}", e.getMessage());
         }
     }
 
     // -------------------------------------------------------
-    // Anchor: banner fijo en la parte inferior
+    // Anchor ads
     // -------------------------------------------------------
     private void removeAnchorAd() {
+
         try {
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript(
-                    "document.querySelectorAll('ins[data-anchor-status]')" +
-                            ".forEach(el => el.remove());"
+            Long removed = (Long) js.executeScript(
+                    """
+                    const ads =
+                        document.querySelectorAll(
+                            "ins[data-anchor-status]"
+                        );
+
+                    const count = ads.length;
+
+                    ads.forEach(element => element.remove());
+
+                    return count;
+                    """
             );
-            System.out.println("✅ Anchor ad eliminado.");
-        } catch (Exception ignored) {}
+
+            if (removed != null && removed > 0) {
+                log.debug("Anchor ad eliminado ({} elemento/s).", removed);
+            }
+
+        } catch (Exception e) {
+            log.debug("removeAnchorAd: {}", e.getMessage());
+        }
     }
 
     // -------------------------------------------------------
-    // Side Rails: anuncios laterales izquierdo y derecho
-    // NUEVO: aparecen en este HTML con class *-side-rail-dismiss-btn
+    // Side rail ads
     // -------------------------------------------------------
     private void removeSideRailAds() {
+
         try {
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript(
-                    "document.querySelectorAll('ins[data-side-rail-status]')" +
-                            ".forEach(el => el.remove());"
+            Long removed = (Long) js.executeScript(
+                    """
+                    const ads =
+                        document.querySelectorAll(
+                            "ins[data-side-rail-status]"
+                        );
+
+                    const count = ads.length;
+
+                    ads.forEach(element => element.remove());
+
+                    return count;
+                    """
             );
-            System.out.println("✅ Side rail ads eliminados.");
-        } catch (Exception ignored) {}
+
+            if (removed != null && removed > 0) {
+                log.debug("Side rail ads eliminados ({} elemento/s).", removed);
+            }
+
+        } catch (Exception e) {
+            log.debug("removeSideRailAds: {}", e.getMessage());
+        }
     }
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Properties>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%t] %c{1} - %msg%n
+        </Property>
+
+        <Property name="LOG_PATH">
+            logs
+        </Property>
+    </Properties>
+
+    <Appenders>
+
+        <!-- Consola -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <!-- Archivo -->
+        <RollingFile
+                name="FileLogger"
+                fileName="${LOG_PATH}/automation.log"
+                filePattern="${LOG_PATH}/history/automation-%d{yyyy-MM-dd}-%i.log.gz">
+
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+
+            <Policies>
+                <!-- Genera un nuevo archivo cada día -->
+                <TimeBasedTriggeringPolicy interval="1"/>
+
+                <!-- O si supera 10 MB -->
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+
+            <DefaultRolloverStrategy max="30"/>
+
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Root level="ALL">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLogger"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>

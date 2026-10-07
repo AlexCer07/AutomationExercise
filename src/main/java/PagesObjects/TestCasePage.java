@@ -14,9 +14,11 @@ public class TestCasePage extends AbstractElements {
         PageFactory.initElements(driver, this);
     }
 
+    //Válida que se haya navegado a la vista de casos de prueba
     public String pageSuccessfully(){
         waitToUrlContain("/test_case");
         waitForPageLoad();
+        log.info("Navegación a la pagina test cases exitosa");
         return driver.getCurrentUrl();
     }
 }

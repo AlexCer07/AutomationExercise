@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,45 +17,48 @@ public class CheckOutPage extends AbstractElements {
         super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
-
     }
+
+    //*********Elements************
 
     @FindBy(css = "[name= 'message']")
     WebElement msgAboutOrder;
 
-    @FindBy(css = "a[href='/payment']")
-    WebElement placeOrderBtn;
-
     @FindBy(id = "address_delivery")
     WebElement addressDelivery;
 
-    @FindBy(id = "address_invoice")
-    WebElement addressBilling;
+    @FindBy(css = "a[href='/payment']")
+    WebElement paymentPageLinkElement;
+
+    private final By name = By.cssSelector(".address_firstname.address_lastname");
+    private final By company = By.xpath("//li[@class = 'address_address1 address_address2'][1]");
+    private final By address = By.xpath("//li[@class = 'address_address1 address_address2'][2]");
+    private final By address2 = By.xpath("//li[@class = 'address_address1 address_address2'][3]");
+    private final By location = By.cssSelector(".address_city.address_state_name.address_postcode");
+    private final By country = By.cssSelector(".address_country_name");
+    private final By phone = By.cssSelector(".address_phone");
+    private final By paymentPageLink = By.cssSelector("a[href='/payment']");
 
 
-    By name = By.cssSelector(".address_firstname.address_lastname");
-    By company = By.xpath("//li[@class = 'address_address1 address_address2'][1]");
-    By address = By.xpath("//li[@class = 'address_address1 address_address2'][2]");
-    By address2 = By.xpath("//li[@class = 'address_address1 address_address2'][3]");
-    By location = By.cssSelector(".address_city.address_state_name.address_postcode");
-    By country = By.cssSelector(".address_country_name");
-    By phone = By.cssSelector(".address_phone");
+    //*******Methods********
 
-
-
-
+    //Ingresa información adicional sobre la compra (Referencias)
     public void fillMsgAboutOrder(String message){
-
         msgAboutOrder.sendKeys(message);
     }
 
-    public PaymentPage placeOrder(){
+    //Redirige a la vista para ingresar la información de pago
+    public PaymentPage placeOrder() {
+        waitForWebElementToAppear(paymentPageLink);
+        scrollToElement(paymentPageLinkElement);
+        safeClickAndWaitForUrl(paymentPageLink, "/payment");
 
-        waitForWebElementToAppear(By.cssSelector("a[href='/payment']"));
-        placeOrderBtn.click();
+        log.info("Se redige a la vista para ingresar la información de pago");
+
         return new PaymentPage(driver);
     }
 
+    //Extrae la información de entrega, siendo los datos que ingreso el usuario al crear la cuenta
     public Map<String, String> deliveryAddressInfo(){
 
         Map<String,String> deliveryAddress = new HashMap<>();
@@ -71,6 +73,7 @@ public class CheckOutPage extends AbstractElements {
         return deliveryAddress;
     }
 
+    //Extrae la información de la cuenta, siendo los datos que ingreso el usuario al crear la cuenta
     public Map<String, String> billingAddressInfo(){
 
         Map<String,String> addressBilling = new HashMap<>();
@@ -83,9 +86,5 @@ public class CheckOutPage extends AbstractElements {
         addressBilling.put("phone", addressDelivery.findElement(phone).getText());
 
         return addressBilling;
-
     }
-
-
-
 }

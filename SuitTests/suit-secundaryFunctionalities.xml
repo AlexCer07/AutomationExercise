@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="SecondaryFunctionalities" verbose="1">
+
+    <listeners>
+        <listener class-name="Listeners.TestListener"/>
+    </listeners>
+
+    <test name="Functionalities Tests">
+
+        <groups>
+            <run>
+                <include name="functionalities"/>
+            </run>
+        </groups>
+
+        <classes>
+            <class name="Test.SecondaryFunctionalities"/>
+        </classes>
+
+    </test>
+
+</suite>

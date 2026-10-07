@@ -1,202 +1,201 @@
 package PagesObjects;
 
 import AbstractElements.AbstractElements;
+import AbstractElements.ProductActions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class HomePage extends AbstractElements {
 
     WebDriver driver;
+    ProductActions productActions;
 
     public HomePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
-
+        productActions = new ProductActions(driver);
     }
 
-    @FindBy(css = ".features_items div.col-sm-4")
-    List<WebElement> productList;
-
-    @FindBy(css = "[class='modal-content'] button")
-    WebElement modalContinueShopping;
-
-    @FindBy(css = "[class='modal-content'] a")
-    WebElement modalViewCart;
-
-    @FindBy(css = ".brands-name li a")
-            List<WebElement> brandsItems;
-
-    @FindBy(id = "accordian")
-            WebElement sidebarCategory;
+    //*****************Elements****************
 
     @FindBy(css = "#recommended-item-carousel")
     WebElement recommendedProduct;
 
-    By addProductButtonOverlay = By.xpath(".//div[@class='overlay-content']/a[@class='btn btn-default add-to-cart']");
+    private final By brandsItems = By.cssSelector(".brands-name li a");
+    private final By activeSlide = By.cssSelector("#recommended-item-carousel .item.active");
+    private final By viewProductBtn = By.xpath("//a[contains(@href,'product_details/')]");
 
-    By visibleProducts = By.cssSelector(".item.active .productinfo");
-    By nextProducts = By.cssSelector("a.left");
+    private final By rightArrow =
+            By.xpath("//div[@id='recommended-item-carousel']//i[@class='fa fa-angle-right']");
 
+    private final By visibleProducts =
+            By.cssSelector("#recommended-item-carousel .item.active .productinfo.text-center");
+
+    private final By recommendProductCardLocator =
+            By.cssSelector("#recommended-item-carousel .item .productinfo.text-center");
+
+    //****************Methods******************
+
+    //Ingresa al sitio web cuando inician los test
     public void goTo() {
+        log.info("Navegando al sitio web: 'https://automationexercise.com/'");
         driver.get("https://automationexercise.com/");
     }
 
-
-    public ProductDetailPage viewProduct(String nameProduct) {
-
-        List<WebElement> product = productList.stream()
-                .filter(s -> s.findElement(By.tagName("p")).getText().equalsIgnoreCase(nameProduct))
-                .collect(Collectors.toList());
-
-        product.get(0).findElement(By.xpath("//a[contains(@href,'product_details/')]")).click();
-
-        return new ProductDetailPage(driver);
+    //Localiza el elemento que funciona como control para abrir/cerrar la sección
+    private By getSectionToggle(String sectionName) {
+        String capitalName = sectionName.substring(0,1)
+                .toUpperCase()
+                .concat(sectionName.substring(1)
+                        .toLowerCase());
+        return By.xpath("//a[@href='#" + capitalName + "']");
     }
 
-    public WebElement getProductElement(String nameProduct){
+    //localiza el panel que contiene las subcategorías
+    private By getSectionPanel(String sectionName) {
+        String capitalName = sectionName.substring(0,1)
+                .toUpperCase()
+                .concat(sectionName.substring(1)
+                        .toLowerCase());
+        return By.id(capitalName);
+    }
 
-        WebElement product = productList.stream()
-                .filter( s -> s.findElement(By.tagName("p")).getText().equalsIgnoreCase(nameProduct))
+    //Se obtienen los elementos de las categorias de una sección
+    private By getCategoryItems(String sectionName) {
+        String capitalName = sectionName.substring(0,1)
+                .toUpperCase()
+                .concat(sectionName.substring(1)
+                        .toLowerCase());
+        return By.cssSelector("#" + capitalName + " .panel-body ul li a");
+    }
+
+    //Expande la lista de elementos de una categoria general
+    public void expandSection(String sectionName) {
+        WebElement panel = driver.findElement(getSectionPanel(sectionName));
+
+        if (!panel.isDisplayed()) {
+            WebElement toggle = waitForWebElementToClickable(getSectionToggle(sectionName));
+            jsClick(toggle);
+            waitForVisibilityOfElementLocated(getSectionPanel(sectionName));
+        }
+    }
+
+    //Se navega hacia una categoria
+    public void selectCategory(String sectionName, String categoryName) {
+
+        expandSection(sectionName);
+        List<WebElement> items = waitAllElementsVisible(getCategoryItems(sectionName));
+
+        log.info("Se selecciona la categoria: {} > {}", sectionName, categoryName);
+
+        WebElement category = items.stream()
+                .filter(item -> item.getText().trim().equalsIgnoreCase(categoryName.trim()))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Product Not Find"));
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "No se encontró la categoría '" + categoryName + "' en '" + sectionName + "'"));
 
-        return product;
+        String oldUrl = driver.getCurrentUrl();
+        jsClick(category);
+        waitForUrlToChange(oldUrl);
     }
 
-    public Map<String, String> getAProductNameAndPrice(){
-        List<String> products = productList.stream()
-                .map(s -> s.findElement(By.tagName("p")).getText()).toList();
+    //Se obtiene el nombre de una categoria de forma aleatoria para una sección dada
+    public String getRandomCategory(String sectionName) {
 
-        String prod = products.get((int) (Math.random()*(products.size())));
-        List<String> price = productList.stream()
-                .filter(s -> s.findElement(By.tagName("p")).getText().equalsIgnoreCase(prod))
-                .map(s -> s.findElement(By.tagName("h2")).getText()).toList();
+        List<WebElement> items = waitPresenceOfAllElementsLocatedBy(getCategoryItems(sectionName));
 
-        Map<String,String> productInfo = new HashMap<>();
-        productInfo.put("name" , prod);
-        productInfo.put("price", price.get(0));
+        if (items.isEmpty()) {
+            throw new RuntimeException("No se encontraron categorías para " + sectionName);
+        }
+
+        Random random = new Random();
+
+        return Objects.requireNonNull(items.get(random.nextInt(items.size()))
+                .getDomProperty("textContent"))
+                .trim();
+    }
+
+
+    //Se selecciona la marca dada
+    public void selectBrand(String brandName){
+        List<WebElement> items = waitForWebElementListToAppearBy(brandsItems);
+
+        WebElement category = items.stream()
+                .filter(item -> item.getText().trim().contains(brandName.trim()))
+                .findFirst()
+                .orElseThrow(() ->
+                        new RuntimeException("No se encontró la marca " + brandName));
+
+        log.info("Se selecciona la marca: {}",brandName);
+
+        String oldUrl = driver.getCurrentUrl();
+        jsClick(category);
+        waitForUrlToChange(oldUrl);
+    }
+
+    //Se obtiene el nombre de una marca de manera aleatoria
+    public String getRandomBrand(){
+        List<WebElement> items = waitForWebElementListToAppearBy(brandsItems);
+
+        if (items.isEmpty()) {
+            throw new RuntimeException("No se encontraron la marcas");
+        }
+
+        List<String> brandNames = items.stream()
+                .map(brand -> brand.getText()
+                        .replace(brand.findElement(By.tagName("span")).getText(), "")
+                        .trim())
+                .toList();
+
+        Random random = new Random();
+
+        return brandNames.get(random.nextInt(items.size())).trim();
+    }
+
+    //Se anvega hasta la sección de productos recomendados
+    public void goToRecommendedItems(){
+        scrollToElement(recommendedProduct);
+    }
+
+    //Se obtiene el nombre de un producto de la sección recomendados de forma aleatoria
+    public Map<String,String> randomRecommendProduct(){
+        List<WebElement> productCards = waitForWebElementListToBePresentBy(recommendProductCardLocator);
+
+        int randomIndex = (int) (Math.random() * productCards.size());
+
+        WebElement productCard = productCards.get(randomIndex);
+        String price = productCard.findElement(By.cssSelector("h2")).getDomProperty("textContent");
+        String name = productCard.findElement(By.cssSelector("p")).getDomProperty("textContent");
+        Map<String, String> productInfo = new HashMap<>();
+
+        productInfo.put("name", name);
+        productInfo.put("price", price);
+
+        log.info("Producto a buscar de la sección recomendados: {}", productInfo.get("name"));
 
         return productInfo;
     }
 
-    public String getAProductName(){
-        List<String> products = productList.stream()
-                .map(s -> s.findElement(By.tagName("p")).getText()).toList();
-
-        String prod = products.get((int) (Math.random()*(products.size())));
-
-
-        return prod;
-    }
-
-    public void addProduct(String productName) {
-
-        WebElement productOnList = getProductElement(productName);
-        moveToElement(productOnList);
-
-        waitForWebElementToClickable(productOnList.findElement(addProductButtonOverlay));
-        WebElement addBtn = productOnList.findElement(addProductButtonOverlay);
-
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addBtn);
-
-    }
-
-    public void continueShopping(){
-        waitForWebElementToAppear(modalContinueShopping);
-        modalContinueShopping.click();
-    }
-
-    public CartPage viewCart(){
-        waitForWebElementToAppear(modalContinueShopping);
-        modalViewCart.click();
-        return new CartPage(driver);
-    }
-
-    private By getSectionToggle(String sectionName) {
-
-        String capitalName = sectionName.substring(0,1).toUpperCase().concat(sectionName.substring(1).toLowerCase());
-        return By.xpath("//a[@href='#" + capitalName + "']");
-    }
-
-    private By getSectionPanel(String sectionName) {
-
-        String capitalName = sectionName.substring(0,1).toUpperCase().concat(sectionName.substring(1).toLowerCase());
-        return By.id(capitalName);
-    }
-
-    private By getCategoryItems(String sectionName) {
-        String capitalName = sectionName.substring(0,1).toUpperCase().concat(sectionName.substring(1).toLowerCase());
-
-        return By.cssSelector("#" + capitalName + " .panel-body ul li a");
-    }
-
-
-
-    public void expandSection(String sectionName){
-        WebElement toggle = waitForWebElementToClickable(getSectionToggle(sectionName));
-        toggle.click();
-
-        waitForVisibilityOfElementLocated(getSectionPanel(sectionName));
-    }
-
-    public void selectCategory(String sectionName, String categoryName){
-
-        expandSection(sectionName);
-
-        List<WebElement> items = waitAllElementsVisible(getCategoryItems(sectionName));
-
-        items.stream().filter( s -> s.getText().equalsIgnoreCase(categoryName))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No se encontró la categoría '" + categoryName + "' en '" + sectionName + "'"))
-                .click();
-    }
-
-    public String getRandomCategory(String sectionName){
-
-        List<WebElement> items = sidebarCategory.findElements(getCategoryItems(sectionName));
-
-        Random random = new Random();
-        return items.get(random.nextInt(items.size())).getDomProperty("textContent").trim();
-    }
-
-    public void selectBrand(String name){
-        brandsItems.stream().filter(s -> s.getText().equalsIgnoreCase(name))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Brand "+ name + " not found"))
-                .click();
-    }
-
-    public String getRandomBrand(){
-
-        return brandsItems.get((int) Math.random()*brandsItems.size()).getText().trim();
-    }
-
-
-    public void goToRecommendedItems(){
-
-        scrollToElement(recommendedProduct);
-    }
-
-    public void viewRecommendProduct(String productName){
+    //Se busca un producto en la sección de recomendados
+    public void viewRecommendProduct(String productName) {
 
         int maxAttempts = 10;
 
-        for(int i = 0; i < maxAttempts; i++){
+        for (int i = 0; i < maxAttempts; i++) {
             List<WebElement> products = waitAllElementsVisible(visibleProducts);
 
-            for (WebElement product : products){
-                String currentName = product.findElement(By.tagName("p")).getText().trim();
+            for (WebElement product : products) {
+                String currentName = normalizeText(product.findElement(By.tagName("p")).getText());
+                log.debug("Buscando: {}", productName);
+                log.debug("Producto visible: {}", currentName);
 
-                if(currentName.equalsIgnoreCase(productName)){
-
+                if (currentName.equalsIgnoreCase(normalizeText(productName))) {
                     WebElement addToCart = product.findElement(By.cssSelector(".add-to-cart"));
                     waitForWebElementToClickable(addToCart);
                     addToCart.click();
@@ -204,27 +203,63 @@ public class HomePage extends AbstractElements {
                 }
             }
 
+            // Guardamos el slide actual
+            WebElement oldSlide = driver.findElement(activeSlide);
 
-            /*products.stream()
-                    .filter(s -> s.findElement(By.tagName("p")).getText().trim().equalsIgnoreCase(productName))
-                    .findFirst()
-                    .ifPresent(
-                            s -> {
-                                WebElement addToCart = s.findElement(By.cssSelector(".add-to-cart"));
-                                waitForWebElementToClickable(addToCart);
-                                //addToCart.click();
-                                ((JavascriptExecutor) driver)
-                                        .executeScript("arguments[0].click();", addToCart);
-                                waitToLocatedElement(By.cssSelector("[class='modal-content'] a"));
-                                return;
-                            }
-                    );*/
+            // Clic siguiente
+            WebElement btn = waitForWebElementToClickable(rightArrow);
+            btn.click();
 
-
+            // Esperamos que el slide anterior deje de ser el activo
+            waitForElementToChange(activeSlide, oldSlide);
         }
 
-        //throw new NoSuchElementException("no se encontro el producto: "+ productName);
-
+        throw new RuntimeException("Recommended product not found: " + productName);
     }
 
+    //Se contruye el nombre de la categoria para validaciones en el website
+    public String buildCategory(String category, String sectionName) {
+        String capitalName = category.substring(0,1).toUpperCase()
+                .concat(category.substring(1)
+                        .toLowerCase());
+
+        log.debug("Nombre de categoria construida: {}", capitalName.concat(" > " + sectionName));
+
+        return capitalName.concat(" > " + sectionName);
+    }
+
+    //Redirige a la vista view Product de un producto
+    public ProductDetailPage viewProduct(String nameProduct){
+        //Obtiene el card del producto
+        WebElement product = productActions.getProductElement(nameProduct);
+        scrollToElement(product);
+        //Hace clic en el botón view product
+        product.findElement(viewProductBtn).click();
+
+        log.info("Se visualizan los detalles del producto: {}", nameProduct);
+
+        return new ProductDetailPage(driver);
+    }
+
+    //***************Métodos delegados a ProductActions **************
+
+    public String getRandomProductName() {
+        return productActions.getRandomProductName();
+    }
+
+    public void continueShopping() {
+        productActions.continueShopping();
+    }
+
+    public CartPage viewCart(){
+        return productActions.viewCart();
+    }
+
+    public Map<String, String> getAProductNameAndPrice() {
+        return productActions.getAProductNameAndPrice();
+    }
+
+    public void addProduct(String productName) {
+        productActions.addProduct(productName);
+    }
 }

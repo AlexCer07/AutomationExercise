@@ -7,6 +7,9 @@ Este proyecto valida flujos críticos de un eCommerce utilizando Selenium WebDri
 🔗 Sistema bajo prueba: https://automationexercise.com/
 
 
+**Nota: pendiente de cambiar rutas para que funcione en distintos equipos**
+
+
 >> ⚠️ Este sitio es propiedad de un tercero y se utiliza únicamente con fines educativo, por lo que la responsabilidad del mantenimiento del sitio está fuera de alcance.
 
 # #🎯 Objetivo del proyecto
