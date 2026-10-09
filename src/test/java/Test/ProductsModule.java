@@ -38,7 +38,6 @@ public class ProductsModule extends BaseTest {
     }
 
 
-
     @Test(groups = {"product"})
     public void case10SearchProduct(){
 
@@ -87,13 +86,11 @@ public class ProductsModule extends BaseTest {
         Map<String,String> prodOnCart1 = cartPage.getProductInCart(product1.get("name"));
         Map<String,String> prodOnCart2 = cartPage.getProductInCart(product2.get("name"));
 
-
         //Validations
         SoftAssert softAssert = new SoftAssert();
         SoftValidation.validateProductOnCart(product1, prodOnCart1, softAssert);
         SoftValidation.validateProductOnCart(product2, prodOnCart2, softAssert);
         softAssert.assertAll();
-
     }
 
     @Test(groups = {"product"}, dataProvider = "getDataProductBlueTop", dataProviderClass = getData.class)
@@ -171,11 +168,9 @@ public class ProductsModule extends BaseTest {
         String userLoggedMsg = loginPage.userLogged();
         softAssert.assertEquals(userLoggedMsg, "Logged in as " + userData.get("userName"));
 
-
         //step 12 - Hacer clic en el botón 'Cart'
         loginPage.goToCartPage();
         prodOnCart = cartPage.getProductInCart(product.get("name"));
-
 
         //Validations
         SoftValidation.shortValidateProductOnCart(product, prodOnCart, softAssert);
@@ -185,7 +180,6 @@ public class ProductsModule extends BaseTest {
 
         SoftValidation.validateAddressOrBillingDetail(userData,checkOutPage.deliveryAddressInfo(),softAssert);
         SoftValidation.validateAddressOrBillingDetail(userData,checkOutPage.billingAddressInfo(),softAssert);
-
 
         //Step 14 - Ingresar una descripción en el área de texto, para agregar un comentario sobre la orden
         Map<String,String> paymentInfo = checkOutPage.fakePaymentInfo();
@@ -203,7 +197,6 @@ public class ProductsModule extends BaseTest {
 
         //Elimina la cuenta para no llenar la base de cuentas aleatorias
         loginPage.deleteAccount();
-
     }
 
     @Test(groups = {"product"}, dataProvider="getDataLogin", dataProviderClass = getData.class)
@@ -211,13 +204,13 @@ public class ProductsModule extends BaseTest {
 
         Map<String,String> product = homePage.getAProductNameAndPrice();
 
-        //Step 1
+        //Step 1 - Hacer clic en el botón 'Add to cart' de cualquier producto
         homePage.addProduct(product.get("name"));
 
-        //step 2
+        //Step 2 - Hacer clic en el botón 'Continue shopping'
         homePage.continueShopping();
 
-        //step 3
+        //step 3 - Hacer clic en el botón 'Cart'
         CartPage cartPage = homePage.goToCartPage();
 
         Map<String,String> prodOnCart = cartPage.getProductInCart(product.get("name"));
@@ -229,51 +222,45 @@ public class ProductsModule extends BaseTest {
         SoftAssert softAssert = new SoftAssert();
         SoftValidation.shortValidateProductOnCart(product, prodOnCart, softAssert);
 
-        //Step 4
+        //Step 4 - Hacer clic en el botón 'Proceed To Checkout'
         cartPage.proceedToCheckout();
 
-        //Step 5
+        //Step 5 - Hacer clic en el botón 'Register / Login'
         LoginPage loginPage = cartPage.registerOrLogin();
 
-
-        //Step 6 and 7
+        //Step 6 - Ingresar nombre y email válidos en los campos correspondiente de la sección
+        //Step 7 - Hacer clic en el botón Signup
         loginPage.logIn( input.get("email"), input.get("password"));
 
-
-        //Step 11
         String userLoggedMsg = loginPage.userLogged();
         softAssert.assertEquals(userLoggedMsg, "Logged in as " + input.get("username"));
 
-
-        //step 12
+        //step 8 - Hacer clic en el botón 'Cart'
         loginPage.goToCartPage();
         prodOnCart = cartPage.getProductInCart(product.get("name"));
-
 
         //Validations
         SoftValidation.shortValidateProductOnCart(product, prodOnCart, softAssert);
 
-        //step 13
+        //step 9 - Hacer clic en el botón 'Proceed To Checkout'
         CheckOutPage checkOutPage = cartPage.proceedToCheckout();
 
         SoftValidation.validateAddressOrBillingDetail(input,checkOutPage.deliveryAddressInfo(),softAssert);
         SoftValidation.validateAddressOrBillingDetail(input,checkOutPage.billingAddressInfo(),softAssert);
 
-
-        //Step 14
+        //Step 10 - Ingresar una descripción en el área de texto, para agregar un comentario sobre la orden
         Map<String,String> paymentInfo = checkOutPage.fakePaymentInfo();
         checkOutPage.fillMsgAboutOrder(paymentInfo.get("paragraph"));
 
-        //Step 15
+        //Step 11 - Hacer clic en el botón 'Place order'
         PaymentPage paymentPage = checkOutPage.placeOrder();
 
-        //Step 16 and 17
+        //Step 12 - Ingresar la información de la forma de pago(name on card, card number, cvc, expiration date)
+        //Step 13 - Hacer clic en el botón 'pay an confirm'
         String orderPlacedMsg = paymentPage.fillFormPayment(paymentInfo);
         softAssert.assertEquals(orderPlacedMsg, "Congratulations! Your order has been confirmed!");
 
-
         softAssert.assertAll();
-
     }
 
     @Test(groups = {"product"})
@@ -284,7 +271,7 @@ public class ProductsModule extends BaseTest {
         homePage.continueShopping();
         homePage.addProduct(homePage.getRandomProductName());
 
-        //Step 1 - Hacer clic en le botón cart
+        //Step 1 - Hacer clic en el botón cart
         CartPage cartPage = homePage.viewCart();
 
         //Step 2 - Hacer clic en el botón X de los productos agregados
@@ -366,87 +353,73 @@ public class ProductsModule extends BaseTest {
 
         SoftAssert softAssert = new SoftAssert();
 
-        // Step 1
-        ProductPage productPage =
-                homePage.goToProductPage();
+        // Step 1 Hacer clic en el botón Products del menú de navegación
+        ProductPage productPage = homePage.goToProductPage();
 
-        Map<String, String> product =
-                productPage.getAProductNameAndPrice();
+        Map<String, String> product = productPage.getAProductNameAndPrice();
 
         product.put("quantity", "1");
-        product.put(
-                "totalPrice",
-                product.get("price")
-        );
+        product.put("totalPrice", product.get("price"));
 
-        // Step 2 and 3
-        productPage.searchProduct(
-                product.get("name")
-        );
+        // Step 2 - Ingresar el nombre de un producto en el campo de búsqueda
+        // Step 3 - Hacer clic en el botón de buscar (icono de lupa)
+        productPage.searchProduct(product.get("name"));
 
-        softAssert.assertEquals(
-                productPage.getSectionName(),
+        softAssert.assertEquals(productPage.getSectionName(),
                 "SEARCHED PRODUCTS",
-                "Incorrect section name"
-        );
+                "Incorrect section name");
 
-        softAssert.assertTrue(
-                productPage.isSearchedProductDisplayed(
-                        product.get("name")
-                ),
-                "Searched product was not displayed: "
-                        + product.get("name")
-        );
+        softAssert.assertTrue(productPage.isSearchedProductDisplayed(
+                product.get("name")),
+                "Searched product was not displayed: " + product.get("name"));
 
-        // Step 4 and 5
-        productPage.addProduct(
-                product.get("name")
-        );
+        // Step 4 - Poner el cursor sobre el producto
+        // Step 5 - Hacer clic en el botón 'Add to cart'
+        productPage.addProduct(product.get("name"));
 
-        // Step 6
-        CartPage cartPage =
-                productPage.viewCart();
+        // Step 6 - Hacer clic en el botón View Cart
+        CartPage cartPage = productPage.viewCart();
 
-        Map<String, String> cartProduct =
-                cartPage.getProductInCart(
-                        product.get("name")
-                );
+        Map<String, String> cartProduct = cartPage.getProductInCart(product.get("name"));
 
-        SoftValidation.shortValidateProductOnCart(
-                product,
-                cartProduct,
-                softAssert
-        );
-
+        SoftValidation.shortValidateProductOnCart(product, cartProduct, softAssert);
         softAssert.assertAll();
     }
 
     @Test(groups = {"product"})
     public void test21ProductOpinion(){
 
-        //step 1
+        //Step 1 - Hacer clic en el botón Products del menú de navegación
         ProductPage productPage = homePage.goToProductPage();
 
         String product = productPage.getRandomProductName();
 
-        //Step 2
+        //Step 2 - Hacer clic en el botón view de un producto
         productPage.viewProduct(product);
         Map<String,String> info = productPage.fakeInfo();
 
-        //steps 3 through 6
+        //Step 3 - Ingresar el nombre del usuario en el campo your name
+        //Step 4 - Ingresar el email del usuario en el campo email address
+        //Step 5 - Ingresar una opinion del producto en el campo Add Review here
+        //Step 6 - Hacer clic en el botón submit
         String msg =productPage.publishOpinion(info);
 
+        //Validation
         Assert.assertEquals(msg,"Thank you for your review.");
     }
 
     @Test(groups = {"product"})
     public void test22AddRecommendedProduct(){
 
-        homePage.goToRecommendedItems();
+        //Step 1 - Hacer scroll hasta el pie de página
+        homePage.scrollToElement(homePage.getFooter());
 
         Map<String,String> product = homePage.randomRecommendProduct();
 
-        homePage.viewRecommendProduct(product.get("name"));
+        //Step 2 - Hacer clic en el botón add to cart de un producto recomendado
+        homePage.addRecommendProduct(product.get("name"));
+
+        //Step 3 - Hacer clic en el botón view cart de la modal
         CartPage cartPage = homePage.viewCart();
 
         product.put("quantity", "1");
@@ -469,13 +442,14 @@ public class ProductsModule extends BaseTest {
         loginPage.logIn(input.get("email"), input.get("password"));
 
         Map<String,String> product = homePage.getAProductNameAndPrice();
-        //Step 1
+
+        //Step 1 - Hacer clic en el botón add to cart de un producto
         homePage.addProduct(product.get("name"));
 
-        //Step 2
+        //Step 2 - Hacer clic en el botón continue shopping
         homePage.continueShopping();
 
-        //Step 3
+        //Step 3 - Hacer clic en el botón cart del menú de navegación
         CartPage cartPage = homePage.goToCartPage();
 
         Map<String,String> prodOnCart = cartPage.getProductInCart(product.get("name"));
@@ -486,32 +460,32 @@ public class ProductsModule extends BaseTest {
         SoftAssert softAssert = new SoftAssert();
         SoftValidation.shortValidateProductOnCart(product, prodOnCart, softAssert);
 
-        //Step 4
+        //Step 4 - Hacer clic en el botón 'Proceed To Checkout'
         CheckOutPage checkOutPage = cartPage.proceedToCheckout();
 
         SoftValidation.validateAddressOrBillingDetail(input,checkOutPage.deliveryAddressInfo(),softAssert);
         SoftValidation.validateAddressOrBillingDetail(input,checkOutPage.billingAddressInfo(),softAssert);
 
 
-        //Step 5
+        //Step 5 - Ingresar una descripción en el área de texto, para agregar un comentario sobre la orden
         Map<String,String> paymentInfo = checkOutPage.fakePaymentInfo();
         checkOutPage.fillMsgAboutOrder(paymentInfo.get("paragraph"));
 
-        //Step 6
+        //Step 6 - Hacer clic en el botón 'Place order'
         PaymentPage paymentPage = checkOutPage.placeOrder();
 
-        //Step 7 and 8
+        //Step 7 - Ingresar la información de la forma de pago(name on card, card number, cvc, expiration date)
+        //Step 8 - Hacer clic en el botón 'pay an confirm'
         String orderPlacedMsg =  paymentPage.fillFormPayment(paymentInfo);
         softAssert.assertEquals(orderPlacedMsg, "Congratulations! Your order has been confirmed!");
 
-        //Step 9
+        //Step 9 - Hacer clic en el botón 'Download Invoice'
         long startTime = System.currentTimeMillis();
         paymentPage.downloadInvoice();
         File file = paymentPage.waitForLatestFile(downloadPath, 30,startTime);
 
         softAssert.assertNotNull(file);
         String contentFile = Files.readString(file.toPath());
-        System.out.println("contentFile = " + contentFile);
 
         String contentExpected = "Hi %s %s, Your total purchase amount is %s. Thank you"
                 .formatted(
@@ -522,14 +496,11 @@ public class ProductsModule extends BaseTest {
 
         softAssert.assertEquals(contentFile,contentExpected);
 
-        //step 10
-
+        //step 10 - Hacer clic en el botón continue
         String urlHomePage = paymentPage.continueShop();
 
         softAssert.assertEquals(urlHomePage, "https://automationexercise.com/");
 
         softAssert.assertAll();
     }
-
-
 }

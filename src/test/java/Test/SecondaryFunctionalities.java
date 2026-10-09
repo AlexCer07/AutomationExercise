@@ -53,7 +53,6 @@ public class SecondaryFunctionalities extends BaseTest {
         //Validate URL page
         String url = testCasePage.pageSuccessfully();
         Assert.assertEquals(url, "https://automationexercise.com/test_cases");
-
     }
 
     @Test(groups = {"functionalities"}, dataProvider = "getDataProductBlueTop", dataProviderClass = getData.class)
@@ -75,7 +74,6 @@ public class SecondaryFunctionalities extends BaseTest {
         Map<String,String> details = productDetailPage.detailProduct();
         SoftValidation.validateProduct(input, details, softAssert);
         softAssert.assertAll();
-
     }
 
     @Test(groups = {"functionalities"})
@@ -92,7 +90,6 @@ public class SecondaryFunctionalities extends BaseTest {
         String subscriptionMsg = homePage.subscribe(email);
 
         Assert.assertEquals(subscriptionMsg,"You have been successfully subscribed!");
-
     }
 
     @Test(groups = {"functionalities"})
@@ -110,7 +107,6 @@ public class SecondaryFunctionalities extends BaseTest {
         //Step 4 - Hacer clic en el botón arrow que se encuentra a lado del campo 'Your mail address'
         String subscriptionMsg = cartPage.subscribe(email);
         Assert.assertEquals(subscriptionMsg,"You have been successfully subscribed!");
-
     }
 
 
@@ -126,5 +122,4 @@ public class SecondaryFunctionalities extends BaseTest {
 
         softAssert.assertAll();
     }
-
 }

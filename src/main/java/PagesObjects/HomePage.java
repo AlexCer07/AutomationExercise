@@ -183,7 +183,7 @@ public class HomePage extends AbstractElements {
     }
 
     //Se busca un producto en la sección de recomendados
-    public void viewRecommendProduct(String productName) {
+    public void addRecommendProduct(String productName) {
 
         int maxAttempts = 10;
 

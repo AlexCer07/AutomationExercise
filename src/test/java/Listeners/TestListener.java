@@ -22,7 +22,7 @@ public class TestListener extends BaseTest implements ITestListener {
 
     ExtentTest test;
     ExtentReports extent = ExtendReporterNG.getReportObject();
-    ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
+    ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
     @Override
     public void onTestStart(ITestResult result) {
@@ -85,7 +85,7 @@ public class TestListener extends BaseTest implements ITestListener {
         }
 
 
-        String filePath = null;
+        String filePath;
         try {
             filePath = getScreenshot(result.getMethod().getMethodName(), driver);
         } catch (IOException e) {
