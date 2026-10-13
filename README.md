@@ -115,19 +115,19 @@ Por ejemplo, **si las suites están almacenadas en el directorio SuitTests** **d
 **Suite de login:**
 
 ```bash
-mvn test -Dsurefire.suiteXmlFiles=SuitTests/suit-login.xml
+mvn test "-Dsurefire.suiteXmlFiles=SuitTests/suit-login.xml"
 ```
 
 **Suite de productos:**
 
 ```bash
-mvn test -Dsurefire.suiteXmlFiles=SuitTests/suit-product.xml
+mvn test "-Dsurefire.suiteXmlFiles=SuitTests/suit-product.xml"
 ```
 
 **Suite de funcionalidades secundarias:**
 
 ```bash
-mvn test -Dsurefire.suiteXmlFiles=SuitTests/suit-secundaryFunctionalities.xml
+mvn test "-Dsurefire.suiteXmlFiles=SuitTests/suit-secundaryFunctionalities.xml"
 ```
 
 > **Importante:** Para que estos comandos funcionen, Maven Surefire debe estar configurado con soporte para TestNG y la propiedad `surefire.suiteXmlFiles`. La ubicación de las suites y la configuración de `pom.xml` deben verificarse en el proyecto.
