@@ -158,38 +158,37 @@ public class ProductsModule extends BaseTest {
         loginPage.signUp( userData.get("userName"), userData.get("email"));
 
         //Step 8 - Completar la información obligatoria de la cuenta
-        //Step 9 - Completar la información de dirección obligatoria
-        //Step 10 - Presionar el botón Create Account
+        //Step 9 - Presionar el botón Create Account
         loginPage.informationAccount(userData);
 
-        //Step 11 - Hacer clic en el botón continuar
+        //Step 10 - Hacer clic en el botón continuar
         String accountCreatedMsg = loginPage.accountCreated();
         softAssert.assertEquals(accountCreatedMsg, "ACCOUNT CREATED!");
         String userLoggedMsg = loginPage.userLogged();
         softAssert.assertEquals(userLoggedMsg, "Logged in as " + userData.get("userName"));
 
-        //step 12 - Hacer clic en el botón 'Cart'
+        //step 11 - Hacer clic en el botón 'Cart'
         loginPage.goToCartPage();
         prodOnCart = cartPage.getProductInCart(product.get("name"));
 
         //Validations
         SoftValidation.shortValidateProductOnCart(product, prodOnCart, softAssert);
 
-        //step 13 - Hacer clic en el botón 'Proceed To Checkout'
+        //step 12 - Hacer clic en el botón 'Proceed To Checkout'
         CheckOutPage checkOutPage = cartPage.proceedToCheckout();
 
         SoftValidation.validateAddressOrBillingDetail(userData,checkOutPage.deliveryAddressInfo(),softAssert);
         SoftValidation.validateAddressOrBillingDetail(userData,checkOutPage.billingAddressInfo(),softAssert);
 
-        //Step 14 - Ingresar una descripción en el área de texto, para agregar un comentario sobre la orden
+        //Step 13 - Ingresar una descripción en el área de texto, para agregar un comentario sobre la orden
         Map<String,String> paymentInfo = checkOutPage.fakePaymentInfo();
         checkOutPage.fillMsgAboutOrder(paymentInfo.get("paragraph"));
 
-        //Step 15 - Hacer clic en el botón 'Place order'
+        //Step 14 - Hacer clic en el botón 'Place order'
         PaymentPage paymentPage = checkOutPage.placeOrder();
 
-        //Step 16 - Ingresar la información de la forma de pago(name on card, card number, cvc, expiration date)
-        //Step 17 - Hacer clic en el botón 'pay an confirm'
+        //Step 15 - Ingresar la información de la forma de pago(name on card, card number, cvc, expiration date)
+        //Step 16 - Hacer clic en el botón 'pay an confirm'
         String orderPlacedMsg = paymentPage.fillFormPayment(paymentInfo);
         softAssert.assertEquals(orderPlacedMsg, "Congratulations! Your order has been confirmed!");
 
@@ -229,7 +228,7 @@ public class ProductsModule extends BaseTest {
         LoginPage loginPage = cartPage.registerOrLogin();
 
         //Step 6 - Ingresar nombre y email válidos en los campos correspondiente de la sección
-        //Step 7 - Hacer clic en el botón Signup
+        //Step 7 - Hacer clic en el botón Login
         loginPage.logIn( input.get("email"), input.get("password"));
 
         String userLoggedMsg = loginPage.userLogged();
@@ -292,7 +291,7 @@ public class ProductsModule extends BaseTest {
         String womenCategoryBuild = homePage.buildCategory("women", womenCategory);
 
         //Step 1 - Hacer clic en la categoria Women
-        //Step 2 - Hacer clic en uno de los nombres de las categorías
+        //Step 2 - Hacer clic en una de las subcategorías que tiene la categoria women
         homePage.selectCategory("women", womenCategory);
 
         //Step 3 - Hacer clic en el botón view product de uno de los productos que se muestran
@@ -306,7 +305,7 @@ public class ProductsModule extends BaseTest {
         String menCategoryBuild = homePage.buildCategory("men", menCategory);
 
         //Step 4 - Hacer clic en la categoria Men
-        //Step 5 - Hacer clic en uno de los nombres de las categorías
+        //Step 5 - Hacer clic en una de las subcategorías que tiene la categoria Men
         homePage.selectCategory("men", menCategory);
 
         //Step 6 - Hacer clic en uno de los productos que se muestran

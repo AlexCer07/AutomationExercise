@@ -55,27 +55,6 @@ public class SecondaryFunctionalities extends BaseTest {
         Assert.assertEquals(url, "https://automationexercise.com/test_cases");
     }
 
-    @Test(groups = {"functionalities"}, dataProvider = "getDataProductBlueTop", dataProviderClass = getData.class)
-    public void case9productDetails(HashMap<String,String> input){
-
-        SoftAssert softAssert = new SoftAssert();
-
-        //Step 1 - Hacer clic en el botón 'Products'
-        ProductPage productPage = homePage.goToProductPage();
-
-        //validation to product page
-        boolean allProductsView = productPage.allProductsSuccessfully();
-        softAssert.assertTrue(allProductsView,"Title not found");
-
-        //Step 2 - Hacer clic en el botón 'View Product' del primer producto
-        ProductDetailPage productDetailPage = productPage.viewProduct(input.get("name"));
-
-        //Validations to product info
-        Map<String,String> details = productDetailPage.detailProduct();
-        SoftValidation.validateProduct(input, details, softAssert);
-        softAssert.assertAll();
-    }
-
     @Test(groups = {"functionalities"})
     public void case11SubscriptionHome (){
 

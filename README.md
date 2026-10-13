@@ -2,17 +2,17 @@
 
 Proyecto realizado como práctica de automatización de pruebas.
 
-Este proyecto valida flujos críticos de un eCommerce utilizando Selenium WebDriver + TestNG en Java, aplicando buenas prácticas de diseño de pruebas y automatización.
+Este proyecto valida los flujos críticos de un e-commerce utilizando Selenium WebDriver + TestNG en Java, aplicando buenas prácticas de diseño de pruebas y automatización.
 
-🔗 Sistema bajo prueba: https://automationexercise.com/
+🔗 Sistema bajo prueba (SUT): https://automationexercise.com/
 
 
 **Nota: pendiente de cambiar rutas para que funcione en distintos equipos**
 
 
->> ⚠️ Este sitio es propiedad de un tercero y se utiliza únicamente con fines educativo, por lo que la responsabilidad del mantenimiento del sitio está fuera de alcance.
+> ⚠️ Este sitio es propiedad de un tercero y se utiliza únicamente con fines educativos, por lo que la responsabilidad del mantenimiento del sitio está fuera de alcance.
 
-# #🎯 Objetivo del proyecto
+## 🎯 Objetivo del proyecto
 
 Demostrar habilidades en:
 * Automatización de pruebas funcionales end-to-end
@@ -22,20 +22,20 @@ Demostrar habilidades en:
 
 ## 🧠 Enfoque de automatización
 Se implementa el patrón Page Object Model (POM) para:
-* Separar lógica de negocio y UI
-* Facilitar mantenimiento
+* Separar la lógica de negocio y de la interfaz de usuario
+* Facilitar el mantenimiento
 * Reutilizar componentes
 
 También se utilizan:
-* TestNG para organización de pruebas
+* TestNG para la organización de pruebas
 * Data Providers para pruebas parametrizadas
-* Assertions para validación de resultados
+* Aserciones para la validación de resultados
 
 ## 🚀 Características
 
-* Automatización de flujos funcionales de un eCommerce
+* Automatización de flujos funcionales de un comercio electrónico
 
-* Ejecución de pruebas mediante Selenium Web Driver
+* Ejecución de pruebas mediante Selenium WebDriver
 
 * Manejo de Page Object Model (POM)
 
@@ -54,7 +54,7 @@ También se utilizan:
 
 ## 📋 Requisitos
 
-Antes de ejecutar el proyecto asegúrate de tener instalado:
+Antes de ejecutar el proyecto, asegúrate de tener instalado:
 
 * Java 17
 * Maven
@@ -65,29 +65,140 @@ Antes de ejecutar el proyecto asegúrate de tener instalado:
 ## ⚙️ Instalación
 
 1. Clona el repositorio:
-Bash
-git clone https://github.com/tu-usuario/AutomationExercise.git
+
+   ```bash
+   git clone https://github.com/AlexCer07/AutomationExercise
+   ```
 
 2. Ingresa al proyecto:
-Bash
-cd AutomationExercise
+
+   ```bash
+   cd AutomationExercise
+   ```
 
 3. Instala las dependencias con Maven:
-Bash
-mvn clean install
 
-## ▶️ Ejecución
+   ```bash
+   mvn clean install
+   ```
 
-Puedes ejecutar las pruebas de las siguientes formas:
+## ▶️ Ejecución de pruebas
 
-Desde Maven
-Bash
+El proyecto utiliza **TestNG** para organizar y ejecutar los casos de prueba. Es posible ejecutar una suite específica desde IntelliJ IDEA o mediante Maven, siempre que el proyecto tenga configurado el plugin **Maven Surefire** para admitir la propiedad `suiteXmlFiles`.
+
+### Suites de pruebas
+
+| Archivo | Propósito |
+|---|---|
+| `suit-login.xml` | Ejecutar las pruebas relacionadas con el registro, el inicio y el cierre de sesión. |
+| `suit-product.xml` | Ejecutar las pruebas relacionadas con productos. |
+| `suit-secundaryFunctionalities.xml` | Ejecutar las pruebas de funcionalidades secundarias. |
+
+> **Nota:** Los nombres de los archivos deben coincidir exactamente con los existentes en el proyecto. Las funcionalidades incluidas en cada suite dependen de las clases y métodos declarados en sus archivos XML.
+
+### Ejecutar una suite desde IntelliJ IDEA
+
+1. Abre el proyecto en IntelliJ IDEA.
+2. Localiza el archivo XML de la suite que deseas ejecutar.
+3. Haz clic derecho sobre el archivo y selecciona **Run** (Ejecutar).
+4. Consulta los resultados en la ventana **Run** de IntelliJ IDEA.
+
+### Ejecutar una suite desde Maven
+
+Desde una terminal situada en la raíz del proyecto, ejecuta el siguiente comando, reemplazando la ruta por la ubicación real del archivo XML:
+
+```bash
+mvn test -Dsurefire.suiteXmlFiles=ruta/a/suit-login.xml
+```
+
+Por ejemplo, **si las suites están almacenadas en la raíz del proyecto**, los comandos serían:
+
+**Suite de login:**
+
+```bash
+mvn test -Dsurefire.suiteXmlFiles=suit-login.xml
+```
+
+**Suite de productos:**
+
+```bash
+mvn test -Dsurefire.suiteXmlFiles=suit-product.xml
+```
+
+**Suite de funcionalidades secundarias:**
+
+```bash
+mvn test -Dsurefire.suiteXmlFiles=suit-secundaryFunctionalities.xml
+```
+
+> **Importante:** Para que estos comandos funcionen, Maven Surefire debe estar configurado con soporte para TestNG y la propiedad `surefire.suiteXmlFiles`. La ubicación de las suites y la configuración de `pom.xml` deben verificarse en el proyecto.
+
+### Ejecutar las pruebas con Maven
+
+```bash
 mvn test
+```
 
-Desde TestNG (IDE)
-1. Abre el proyecto en tu IDE (IntelliJ o Eclipse)
-2. Ubica el archivo testng.xml
-3. Ejecuta como TestNG Suite
+Este comando ejecuta las pruebas que estén configuradas para la fase `test` de Maven. **No implica necesariamente ejecutar todas las suites XML**: el comportamiento depende de la configuración de `pom.xml`.
+
+### Resultados de ejecución
+
+Al finalizar, revisa los resultados mostrados en IntelliJ IDEA o en la terminal. Maven Surefire normalmente genera reportes en `target/surefire-reports/`. Los reportes adicionales y registros de ejecución dependen de la configuración del proyecto.
+
+## 🌐 Configuración de navegadores
+
+El proyecto utiliza **Selenium WebDriver** para ejecutar las pruebas en navegadores web. La inicialización y el cierre del navegador se gestionan desde `BaseTest`.
+
+### Seleccionar el navegador
+
+La configuración del navegador se define mediante la propiedad `browser` del archivo `GlobalData.properties`, ubicado en el paquete `Resources` de la estructura documentada.
+
+Ejemplo de configuración para **Google Chrome**:
+
+```properties
+browser=chrome
+```
+
+Para utilizar **Mozilla Firefox**, cambia el valor:
+
+```properties
+browser=firefox
+```
+
+Guarda el archivo antes de ejecutar las pruebas. El valor debe coincidir con los admitidos por la implementación actual de `BaseTest`.
+
+> **Importante:** La compatibilidad de versiones, la resolución de los controladores y la configuración de perfiles o extensiones dependen del código de `BaseTest` y del entorno local. Antes de ejecutar el proyecto en otro equipo, revisa las rutas específicas de máquina y los requisitos de cada navegador.
+
+### Manejo de anuncios
+
+El proyecto incluye `AdHandler` y `AdListener` para gestionar anuncios que pueden interferir con la interacción de Selenium. Este mecanismo ayuda a reducir interferencias, pero no garantiza que todos los anuncios puedan eliminarse ni sustituye las esperas y validaciones de los casos de prueba.
+
+## 📝 Registro de logs
+
+Se utiliza **Log4j2** para registrar información sobre la ejecución de las pruebas y facilitar el análisis de incidencias.
+
+- **Configuración:** `log4j2.xml`, dentro de los recursos del proyecto.
+- **Registro de eventos de prueba:** `TestListener`, que implementa eventos de TestNG.
+- **Diagnóstico de fallos:** puede incluir el nombre de la prueba, el error y datos del navegador, según la implementación del listener.
+
+Para consultar los registros, ejecuta una suite y revisa la consola y el destino configurado en los *appenders* de `log4j2.xml`.
+
+> **Nota:** La ruta, el nombre y la rotación de los archivos de log deben verificarse en `log4j2.xml`. No se documenta aquí una ubicación fija porque no se ha confirmado la configuración efectiva.
+
+## 📊 Reportes de ejecución
+
+El proyecto incorpora **ExtentReports** para presentar los resultados de las pruebas. La clase `ExtendReporterNG` centraliza la configuración del reporte y `TestListener` registra eventos de TestNG.
+
+### Consultar los resultados
+
+1. Ejecuta una suite desde IntelliJ IDEA o Maven.
+2. Revisa el resultado de las pruebas en la ventana de ejecución o en la terminal.
+3. Consulta los reportes de Maven Surefire, si están habilitados, en `target/surefire-reports/`.
+4. Abre el archivo HTML generado por ExtentReports en un navegador, utilizando la ruta configurada en `ExtendReporterNG`.
+
+Los reportes permiten analizar las pruebas ejecutadas y sus resultados. Las capturas de pantalla asociadas a fallos dependen de que `TestListener` las genere y adjunte correctamente.
+
+> **Nota:** Es necesario confirmar en el código la ruta exacta del reporte HTML, el registro de capturas y el momento en que se guarda el reporte. Estos detalles pueden variar según la configuración actual.
 
 ## ✅ Reglas de negocio
 
@@ -98,359 +209,175 @@ Algunas reglas consideradas en la automatización:
 * El sistema debe mostrar mensajes de error ante credenciales inválidas
 * Los productos agregados al carrito deben reflejarse correctamente
 
-## 🧪 Casos de  Pruebas
-### Precondicion generales
-| ID    | Descripción                                                                                                 |
-|-------|-------------------------------------------------------------------------------------------------------------|
-| PC-01 | La aplicacion we se encuentra disponible y accesible mediante un navegador(https://automationexercise.com/) |
-
-### Test Case 1
-|ID        |Descripcion      |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|----------|-----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-01 |Registrar usuario|Registro |Alta     |Precondicion PC-01 cumplida|email valido y no registrado en el sistema|La cuenta se crea de manera exitosa y el usuario queda autenticado|
-
-|Pasos|Acción                    |Resultado esperado|
-|-----|--------------------------|----------------------|
-|1    |Hacer clic en el botón 'Signup / Login'| Se muestra la sección de 'New user Signup!'|
-|2    |Ingresar nombre y email validos en los campos correspondiente de la sección|El sistema acepta los dato|
-|3    |Hacer clic en el botón Signup|Se muestra la pantalla 'Enter account information'|
-|4    |Completar la información obligatoria de la cuenta |Los campos se validan correctamente|
-|5    |Seleccionar la opción 'sign up for our newsletter!|Opción seleccionada|
-|6    |Seleccionar la opción 'Receive special offers from our partners!'|Opción seleccionada|
-|7    |Completar la información de dirección obligatoria |Información aceptada|
-|8    |Presionar el botón Create Account |Se muestra una pantalla con el mensaje 'Account Created!'|
-|9    |Hacer clic en el botón continuar | El usuario queda autenticado. Se muestra entre las opciones del header el usuario con el que se entra autenticado|
-
-### Test Case 2
-|ID       |Descripción   |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|--------------|------|---------|--------------|---------------|------------------|
-|TC-REG-02|Iniciar sesion|Login |Alta     |Precondición PC-01 cumplida|Cuenta ya registrada |Se debe inicar sesión con la cuenta de forma exitosa y el usuario quedara autenticado|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Signup / Login' | Se muestra la sección 'Login to your account' |
-|2    |Ingresar el email y contraseña de una cuenta ya registrada en los campos correspondientes de la sección|El sistema acepta  los datos|
-|3    |Hacer clic en el botón 'Login' | El usuario queda autenticado. Se muestra entre las opciones del header el usuario con el que se entra autenticado|
-
-### Test case 3
-|ID       |Descripción   |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|--------------|------|---------|--------------|---------------|------------------|
-|TC-REG-03|Cerrar sesion |Login |Alta     |Precondición PC-01 cumplida <br>caso de prueba TC-REG-02 ejecutado y exitoso| |Se debe cerrar sesión de forma exitosa y el usuario ya no estara autenticado|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Logout'|El usuario ya no estara autenticado. No se muestra el nombre del usuario entre las opciones del header. Automaticamente se encontrara en el modulo de Login|
-
-### Test case 4
-
-|ID       |Descripción   |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|--------------|------|---------|--------------|---------------|------------------|
-|TC-REG-04|Iniciar sesión con usuario no registrado previamente |Login |Alta     |Precondición PC-01 cumplida|Cuenta no registrada en el sistema |No se debe iniciar sesión con el usuario ingresado.|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Signup / Login' | Se muestra la sección 'Login to your account' |
-|2    |Ingresar el email y contraseña de una cuenta que no se encuentre registrada, en los campos correspondientes de la sección|El sistema acepta  los datos|
-|3    |Hacer clic en el botón 'Login' | El usuario no sera autenticado. Se muestra un mensaje indicando que el usuario o contraseña con invalidos|
-
-
-### Test case 5
-
-|ID        |Descripcion      |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|----------|-----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-05 |Registrar usuario con email registrado previamente|Registro |Alta     |Precondicion PC-01 cumplida|email valido y registrado en el sistema|La cuenta no sera creada|
-
-| Pasos |Acción                    | Resultado esperado                                      |
-|-------|--------------------------|---------------------------------------------------------|
-| 1     |Hacer clic en el botón 'Signup / Login'| Se muestra la sección de 'New user Signup!'|
-| 2     |Ingresar nombre y email validos de una cuenta registrada previamente en los campos correspondiente de la sección| El sistema acepta los dato |
-| 3     |Hacer clic en el botón Signup| No se muestra la pantalla 'Enter account information'. Se muestra un mensaje indicando que el email ya se encuentra registrado en el sistema |
-
-### Test case 6
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-06|Eliminar cuenta |Login |Alta     |Precondición PC-01 cumplida <br>caso de prueba TC-REG-02 ejecutado y exitoso| |Se debe eliminar la cuenta|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Delete Account'|El usuario ya no estara autenticado. No se muestra el nombre del usuario entre las opciones del header.|
-|2    |Hacer clic en el botón 'Signup / Login' | Se muestra la sección 'Login to your account' |
-|3    |Ingresar el email y contraseña de la cuenta eliminada, en los campos correspondientes de la sección|El sistema acepta  los datos|
-|4    |Hacer clic en el botón 'Login' | El usuario no sera autenticado. Se muestra un mensaje indicando que el usuario o contraseña son invalidos|
-
-### Test case 7
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-07|Enviar un mensaje de contacto |Contact us |Media     |Precondición PC-01 cumplida|email valido |Se debe mandar una mensaje de notificación por correo a la empresa|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Contact Us'|Se muestra la sección 'Get it Touch'.|
-|2    |Ingresar el nombre, email, asunto y mensaje en los campos correspondiente de la sección | El sistem acepta los datos |
-|3    |Hacer clic en el botón 'Seleccionar archivo'|Se abrira el explorador de archivos del equipo|
-|4    |Hacer clic en un archivo que se desee subir y hacer clic en aceptar| El sistema acepta el archivo |
-|5    |Hacer clic en el botón 'submit'|Se muestra una alerta para confirmar el envio del mensaje|
-|6    |Hacer clic en el botón aceptar|El formulario dejeara de muestrarse, en su lugar se muestrar el mensaje 'Success! Your details have been submitted successfully.'|
-|7    |Hacer clic en el botón Home|Se redirigira a la pagina home de forma exitosa|
-
-### Testcase 8
-
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-08|Navegar a los casos de prueba |Test cases|baja     |Precondición PC-01 cumplida| |Se debn muestrar los casos de prueba que tiene el sitio web|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Test cases'|Se muestra la sección 'Test cases' con los casos de prueba que tiene el sitio web|
-
-### Testcase 9
-
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-09|muestrar detalle del producto |Product detail|Alta     |Precondición PC-01 cumplida| |Se deben muestrar todos los detalles del producto|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Products'|Se muestra la sección 'All Products' y la lista de productos sera visible|
-|2    |Hacer clic en el botón 'View Produt' del primer producto|Se redirigira a la vista con los detalles del producto, muestrandose el product name, category, price, availability, condition, brand|
-
-### Testcase 10
-
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-10|Buscar producto |Product|Alta     |Precondición PC-01 cumplida|Nombre del producto existente |Se deben muestrar solo los procustos que cumplan con los criterios de la busqueda|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Products'|Se muestra la sección 'All Products' y la lista de productos sera visible|
-|2    |Ingresar el nombre de un producto en el campo 'Search Product'|El campo permite ingresar datos válidos|
-|3    |Hacer clic en el botón de busqueda | Solo se muestra el producto buscado|
-
-### Testcase 11
-
-|ID       | Descripción                                   |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|-----------------------------------------------|------|---------|--------------|---------------|------------------|
-|TC-REG-11| Realizar suscripcion desde la vista principal |Home -  Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer scroll hasta el pie de pagina|Se muestra la sección se suscripción|
-|2    |Ingresar email en el campo 'Your mail address'|El campo permite ingresar datos válidos|
-|3    |Hacer clic en el botón arrow que se encuentra a lado del campo 'Your mail address'|Se muestra el mensaje 'You have been successfully subscribed!' |
-
-
-### Testcase 12
-
-|ID       | Descripción                                      |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|--------------------------------------------------|------|---------|--------------|---------------|------------------|
-|TC-REG-12| Realizar suscripcion desde el carrito de compras |Cart -  Suscripción|Media     |Precondición PC-01 cumplida|Email valido |Se deben realizar la suscripción de novedades de la tienda|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'Cart'|Se muestra los productos que se han agregado al carrito de compras|
-|2    |Hacer scroll hasta el pie de pagina|Se muestra la sección se suscripción|
-|3    |Ingresar email en el campo 'Your mail address'|El campo permite ingresar datos válidos|
-|4    |Hacer clic en el botón arrow que se encuentra a lado del campo 'Your mail address'|Se muestra el mensaje 'You have been successfully subscribed!' |
-
-
-### Testcase 13
-
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-13|Agregar productos a carrito de compras |Products - Cart|Alta     |Precondición PC-01 cumplida|Email valido |Se deben agregar productos al carrito de compras|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón products|Se muestra la sección 'All Products' y la lista de productos sera visible|
-|2    |Poner el cursor sobre el primer producto|Se muestra un recuadro naranja sobre el producto con el botón 'Add to cart'|
-|3    |Hacer clic en el botón 'Add to cart'|Se muestra un pop up indicando que el producto fue agrega|
-|4    |Hacer clic en el botón 'Continue shopping'|Se cerrara el pop up|
-|5    |Poner el cursor sobre el segundo producto|Se muestra un recuadro naranja sobre el producto con el botón 'Add to cart'|
-|6    |Hacer clic en el botón 'Add to cart'|Se muestra un pop up indicando que el producto fue agrega|
-|7    |Hacer clic en el botón 'view Cart'|Se muestra la pagina del carrito de compras con los productos agregados, con el total a pagar|
-
-
-### Testcase 14
-
-|ID       |Descripción     |Modulo|Prioridad|Precondiciones|Datos de prueba|Resultado esperado|
-|---------|----------------|------|---------|--------------|---------------|------------------|
-|TC-REG-14|Agregar mas de un mismo tipo de produto a carrito de compras |Detail product -Cart|Alta     |Precondición PC-01 cumplida|Email valido |Se deben agregar productos al carrito de compras|
-
-|Pasos|Acción|Resultado esperado|
-|-----|------|------------------|
-|1    |Hacer clic en el botón 'view product' de cualquier producto|Se redirigira a la vista con los detalles del producto, muestrandose el product name, category, price, availability, condition, brand |
-|2    |Ingresar 4 en el campo de quatity|El campo permite ingresar datos válidos|
-|3    |Hacer clic en el botón 'Add to cart'|Se muestra un pop up indicando que el producto fue agrega|
-|4    |Hacer clic en el botón 'view Cart'|Se muestra la pagina del carrito de compras con la cantidad de productos agregados y el total a pagar|
-
-
-### Testcase 15
-
-|ID       | Descripción                                             | Modulo         | Prioridad |Precondiciones| Datos de prueba                          | Resultado esperado                  |
-|---------|---------------------------------------------------------|----------------|-----------|--------------|------------------------------------------|-------------------------------------|
-|TC-REG-15| Hacer una order, registrarse durante el proceso de pago | Cart - payment | Alta      |Precondición PC-01 cumplida| Email valido no registrado en el sistema | Se debe realizar el proceso de pago |
-
-| Pasos | Acción                                                                                  | Resultado esperado                                                                                                                                                             |
-|-------|-----------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1     | Hacer clic en el botón 'Add to cart' de cualquier producto                              | Se muestra un pop up indicando que el producto fue agregado                                                                                                                     |
-| 2     | Hacer clic en el botón 'Continue shopping'                                              | Se cerrara el pop up                                                                                                                                                           |
-| 3     | Hacer clic en el botón 'Cart'                                                           | Se muestra la pagina del carrito de compras con los productos agregados, con el total a pagar                                                                                 |
-| 4     | Hacer clic en el botón 'Proceed To Checkout'                                            | Se muestra un pop up indicando que se debe iniciar sesion para poder continuar con la compra                                                                                  |
-| 5     | Hacer clic en el botón 'Register / Login'                                               | Se muestra la sección de 'New user Signup!'                                                                                                                                    |
-| 6     | Ingresar nombre y email validos en los campos correspondiente de la sección             | El campo permite ingresar datos válidos                                                                                                                                                    |
-| 7     | Hacer clic en el botón Signup                                                           | Se muestra la pantalla 'Enter account information'                                                                                                                             |
-| 8     | Completar la información obligatoria de la cuenta                                       | Los campos se validan correctamente                                                                                                                                            |
-| 9     | Completar la información de dirección obligatoria                                       | Información aceptada                                                                                                                                                           |
-| 10    | Presionar el botón Create Account                                                       | Se muestra una pantalla con el mensaje 'Account Created!'                                                                                                                      |
-| 11    | Hacer clic en el botón continuar                                                        | El usuario queda autenticado. Se muestra entre las opciones del header el usuario con el que se entra autenticado                                                              |
-| 12    | Hacer clic en el botón 'Cart'                                                           | Se muestra la pagina del carrito de compras con los productos agregados, con el total a pagar                                                                                 |
-| 13    | Hacer clic en el botón 'Proceed To Checkout'                                            | Se muestra la sección address detail con la dirección de envio y facturación. tambien se muestra la sección review order, con el resumen de los articulos seleccionados      |
-| 14    | Ingresar una descripción en el area de texto, para agregar un comentario sobr la orden  | El campo permite ingresar datos válidos                                                                                                                                                    |
-| 15    | Hacer clic en el botón 'Place order'                                                    | Se muestra se sección payment                                                                                                                                                 |
-| 16    | Ingresar los datos de la forma de pago(name on card, card number, cvc, expiration date) | El campo permite ingresar datos válidos                                                                                                                                                    |
-| 17    | Hacer clic en el botón 'pay an confirm'                                                 | Se muestra el mensaje 'Your order has been placed successfully!' y se redirige automaticamente a una pantalla con el mensaje 'Congratulations! Your order has been confirmed!' |
-
-
-### Testcase 16
-
-| ID        | Descripción                         | Modulo         | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                  |
-|-----------|-------------------------------------|----------------|-----------|--------------|---------------------------------|-------------------------------------|
-| TC-REG-16 | Hacer una order con usuario logeado | Cart - payment | Alta      |Precondición PC-01 cumplida <br> usuario autenticado| Cuenta registrada en el sistema | Se debe realizar el proceso de pago |
-
-| Pasos | Acción                                                                                  | Resultado esperado                                                                                                                                                             |
-|-------|-----------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1     | Hacer clic en el botón 'Add to cart' de cualquier producto                              | Se muestra un pop up indicando que el producto fue agregado                                                                                                                     |
-| 2     | Hacer clic en el botón 'Continue shopping'                                              | Se cerrara el pop up                                                                                                                                                           |
-| 3     | Hacer clic en el botón 'Cart'                                                           | Se muestra la pagina del carrito de compras con los productos agregados, con el total a pagar                                                                                 |
-| 4     | Hacer clic en el botón 'Proceed To Checkout'                                            | Se muestra la sección address detail con la dirección de envio y facturación. tambien se muestra la sección review order, con el resumen de los articulos seleccionados      |
-| 5     | Ingresar una descripción en el area de texto, para agregar un comentario sobre la orden | El campo permite ingresar datos válidos                                                                                                                                                    |
-| 6     | Hacer clic en el botón 'Place order'                                                    | Se muestra se sección payment                                                                                                                                                 |
-| 7    | Ingresar los datos de la forma de pago(name on card, card number, cvc, expiration date) | El campo permite ingresar datos válidos                                                                                                                                                    |
-| 8    | Hacer clic en el botón 'pay an confirm'                                                 | Se muestra el mensaje 'Your order has been placed successfully!' y se redirige automaticamente a una pantalla con el mensaje 'Congratulations! Your order has been confirmed!' |
-
-
-### Testcase 17
-
-| ID        | Descripción                   | Modulo         | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                  |
-|-----------|-------------------------------|----------------|-----------|--------------|---------------------------------|-------------------------------------|
-| TC-REG-17 | Remover productos del carrito | Cart - payment | Alta      |Precondición PC-01 cumplida <br> Productos agregados al carrito| | El producto no se muestra en el carrito de compras |
-
-| Pasos | Acción                                                     | Resultado esperado                                                                                                                         |
-|-------|------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| 1     |Hacer clic en el botón 'Cart'|Se muestra la pagina del carrito de compras con los productos agregados, con el total a pagar|
-| 2     | Hacer clic en el botón 'X' de un producto                  | Ya no se muestra el producto en el carrito de compras, el monto a pagar sera el correspondiente con lo productos que siguen en el carrito |
-
-
-### Testcase 18
-
-| ID        | Descripción                        | Modulo   | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                               |
-|-----------|------------------------------------|----------|-----------|--------------|---------------------------------|------------------------------------------------------------------|
-| TC-REG-18 | Visualizar categorias de productos | Products | Alta      |Precondición PC-01 cumplida| | Se muestran unicamente los productos correspondiente con la categoria seleccionada |
-
-| Pasos | Acción                                                             | Resultado esperado                                                                                                                                                                              |
-|-------|--------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1     | Hacer clic en la categoria 'Women'                                 | Se muestra una lista con los nombres tipos de productos que tiene la categoria women                                                                                                           |
-| 2     | Hacer clic en el uno de los productos que tiene la categoria women | Se muestra la sección 'Women - nameProduct Products' (nameProduct, siendo el nombre de la marca seleccionada), muestrando unicamente los productos correspondientes con la categoria seleccionada |
-| 3     | Hacer clic en la categoria 'Men'                                   | Se muestra una lista con los nombres tipos de productos que tiene la categoria men                                                                                                             |
-| 4     | Hacer clic en el uno de los productos que tiene la categoria men   | Se muestra la sección 'Men - nameProduct Products' (nameProduct, siendo el nombre de la marca seleccionada), muestrando unicamente los productos correspondientes con la categoria seleccionada   |
-
-
-### Testcase 19
-
-| ID        | Descripción                    | Modulo   | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                           |
-|-----------|--------------------------------|----------|-----------|--------------|---------------------------------|--------------------------------------------------------------|
-| TC-REG-19 | Visualizar marcas de productos | Products | Media     |Precondición PC-01 cumplida| | Se muestran unicamente los productos correspondiente con la marca seleccionada |
-
-| Pasos | Acción                           | Resultado esperado                                                                                                                                                                          |
-|-------|----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1     | Hacer clic en una marca deseada  | Se muestra la sección 'Brand - nameBrand Products' (nameBrand, siendo el nombre de la marca seleccionada), muestrando unicamente los productos correspondientes con la marca seleccionada     |
-| 2     | Hacer clic en otra marca deseada | Se muestra la sección 'Brand - nameBrand Products' (nameBrand, siendo el nombre de la marca seleccionada), muestrando unicamente los productos correspondientes con la categoria seleccionada |
-
-### Testcase 20
-
-| ID        | Descripción                                           | Modulo          | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                                                                                        |
-|-----------|-------------------------------------------------------|-----------------|-----------|--------------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| TC-REG-20 | Realizar una busqueda y agregar al carrito de compras | Products - Cart | Alta      |Precondición PC-01 cumplida| | Se muestran unicamente los productos correspondiente con la busqueda realizada y se podran agregar al carrito de compras |
-
-| Pasos | Acción                                                    | Resultado esperado                                                                                                         |
-|-------|-----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| 1     | Hacer clic en el boton 'Products'                         | Se muestra la sección 'All Products' y la lista de productos sera visible                                                  |
-| 2     | Ingresar el nombre de un producto en el campo de busqueda | El campo permite ingresar datos válidos                                                                                                |
-| 3     | Hacer clic en el botón de buscar (icono de lupa)          | Se muestra la sección 'Searched Products', muestrando unicamente los productos correspondientes con la busqueda seleccionada |
-| 4     | Poner el cursor sobre el primer producto                  | Se muestra un recuadro naranja sobre el producto con el botón 'Add to cart'                                               |
-| 5     | Hacer clic en el botón 'Add to cart'                      | Se muestra un pop up indicando que el producto fue agrega                                                                   |
-| 6     | Hacer clic en el botón 'view Cart'                        | Se muestra la pagina del carrito de compras con los productos agregados, con el total a pagar                             |
-
-
-### Testcase 21
-
-| ID        | Descripción                         | Modulo          | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                          |
-|-----------|-------------------------------------|-----------------|-----------|--------------|---------------------------------|---------------------------------------------|
-| TC-REG-21 | Agregar una opinion de un producto  | Products | Media      |Precondición PC-01 cumplida| email valido | Se agregara una reseaña de un producto de forma exitosa |
-
-| Pasos | Acción                                                           | Resultado esperado                                                                      |
-|-------|------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| 1     | Hacer clic en el boton 'Products'                                | Se muestra la sección 'All Products' y la lista de productos sera visible               |
-| 2     | Hacer clic en el botón 'View Product'                            | Se redirigira a la vista con los detalles del producto y la sección 'Write your review' |
-| 3     | Ingresar el nombre del usuario en el campo your name             | El campo permite ingresar datos válidos                                                             |
-| 4     | Ingresar el email del usuario en el campo email address          | El campo permite ingresar datos válidos                                                             |
-| 5     | Ingresar una opinion del producto en el campo 'Add Review here!' | El campo permite ingresar datos válidos                                                             |
-| 6     | Hacer clic en el botón 'submit'                                  | Se mustra el mensaje 'Thank you for your review.'                                       |
-
-
-### Testcase 22
-
-| ID        | Descripción                                                              | Modulo          | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                            |
-|-----------|--------------------------------------------------------------------------|-----------------|-----|--------------|---------------------------------|-----------------------------------------------|
-| TC-REG-22 | Agregar una producto al carrito de compras de los productos recomendados | Products | Media |Precondición PC-01 cumplida| | Se agregara el producto al carrito de compras |
-
-| Pasos | Acción                                                          | Resultado esperado                                                                            |
-|-------|-----------------------------------------------------------------|------------------------------------------------------------------------------------------------|
-| 1     | Hacer scroll hacia abajo, hasta el final de la pagina           | Se muestra la sección 'RECOMMENDED ITEMS' con algunos productos                              |
-| 2     | Hacer clic en el botón 'View Product'                           | Se redirigira a la vista con los detalles del producto y la sección 'Write your review'        |
-| 3     | Hacer clic en el botón 'Add to cart' de un producto recomendado | Se muestra un pop up indicando que el producto fue agrega                                       |
-| 4     | Hacer clic en el botón 'view Cart'                              | Se muestra la pagina del carrito de compras con los productos agregados, con el total a pagar |
-
-
-### Testcase 23
-
-| ID        | Descripción                                      | Modulo         | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                                                                          |
-|-----------|--------------------------------------------------|----------------|-----------|--------------|---------------------------------|-------------------------------------------------------------------------------------------------------------|
-| TC-REG-23 | Descargar factura despues de realizar una compra | Cart - payment | Alta      |Precondición PC-01 cumplida <br> usuario autenticado| Cuenta registrada en el sistema | Se dede descargar la factura en el equipo del usuario, la factura debe contener la información de la compra |
-
-| Pasos | Acción                                                                                                  | Resultado esperado                                                                                                                                                             |
-|-------|---------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1     | Hacer clic en el botón 'Add to cart' de cualquier producto                                              | Se muestra un pop up indicando que el producto fue agregado                                                                                                                     |
-| 2     | Hacer clic en el botón 'Continue shopping'                                                              | Se cerrara el pop up                                                                                                                                                           |
-| 3     | Hacer clic en el botón 'Cart'                                                                           | Se muestra la pagina del carrito de compras con los productos agregados, con el total a pagar                                                                                 |
-| 4     | Hacer clic en el botón 'Proceed To Checkout'                                                            | Se muestra la sección address detail con la dirección de envio y facturación. tambien se muestra la sección review order, con el resumen de los articulos seleccionados      |
-| 5     | Ingresar una descripción en el area de texto, para agregar un comentario sobre la orden                 | El campo permite ingresar datos válidos                                                                                                                                                    |
-| 6     | Hacer clic en el botón 'Place order'                                                                    | Se muestra se sección payment                                                                                                                                                 |
-| 7    | Ingresar los datos de la forma de pago(name on card, card number, cvc, expiration date)                 | El campo permite ingresar datos válidos                                                                                                                                                    |
-| 8    | Hacer clic en el botón 'pay an confirm'                                                                 | Se muestra el mensaje 'Your order has been placed successfully!' y se redirige automaticamente a una pantalla con el mensaje 'Congratulations! Your order has been confirmed!' |
-| 9    | Hacer clic en el botón 'Download Invoice'                                                               | Se descargara un archivo .txt que contendra el nombre del usuario y el monto a pagar                                                                                           |
-| 10    | Hacer clic en el botón 'Continue'                                                                       | Se redireccionara automaticamente a la vista Home                                                                                                                              |
-
-
-### Testcase 24
-
-| ID        | Descripción                    | Modulo   | Prioridad |Precondiciones| Datos de prueba                 | Resultado esperado                                           |
-|-----------|--------------------------------|----------|-----------|--------------|---------------------------------|--------------------------------------------------------------|
-| TC-REG-24 | Desplazarce a traves de la pagina usando las flechas direccionales | Home | Baja     |Precondición PC-01 cumplida| | Se desplazara al final y al principio de la pagina |
-
-| Pasos | Acción                           | Resultado esperado                                                                                                                                                                          |
-|-------|----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1     | Mantener precionada la tecla de flecha hacia abajo hasta el pie de pagina| Se muestra la sección 'SUBSCRIPTION'|
-| 2     | Mantener precionada la tecla de flecha hacia arriba hasta el inicio de la pagina | Se muestra el texto 'Full-Fledged practice website for Automation Engineers' |
+## 🧪 Casos de prueba
+
+El proyecto documenta **24 casos de prueba funcionales**, organizados por escenario, módulo y prioridad. Las precondiciones, los datos de prueba, los pasos y los resultados esperados se encuentran en [la documentación completa de casos de prueba](docs/test-cases.md).
+
+| ID | Caso de prueba | Módulo | Prioridad |
+|---|---|---|---|
+| TC-REG-01 | Registrar usuario | Registro | Alta |
+| TC-REG-02 | Iniciar sesión | Login | Alta |
+| TC-REG-03 | Cerrar sesión | Login | Alta |
+| TC-REG-04 | Iniciar sesión con usuario no registrado en el sistema | Login | Alta |
+| TC-REG-05 | Registrar usuario con correo electrónico registrado previamente | Registro | Alta |
+| TC-REG-06 | Eliminar cuenta | Login | Alta |
+| TC-REG-07 | Enviar un mensaje de contacto | Contact us | Media |
+| TC-REG-08 | Navegar a los casos de prueba | Test cases | Baja |
+| TC-REG-09 | Mostrar detalle del producto | Product detail | Alta |
+| TC-REG-10 | Buscar producto | Product | Alta |
+| TC-REG-11 | Realizar suscripción desde la vista principal | Home - Suscripción | Media |
+| TC-REG-12 | Realizar suscripción desde el carrito de compras | Cart -  Suscripción | Media |
+| TC-REG-13 | Agregar productos a carrito de compras | Products - Cart | Alta |
+| TC-REG-14 | Agregar más de un mismo tipo de producto a carrito de compras | Detail product - Cart | Alta |
+| TC-REG-15 | Realizar un pedido, registrarse durante el proceso de pago | Cart - payment | Alta |
+| TC-REG-16 | Realizar un pedido con usuario autenticado | Cart - payment | Alta |
+| TC-REG-17 | Remover productos del carrito | Cart - payment | Alta |
+| TC-REG-18 | Visualizar categorías de productos | Products | Alta |
+| TC-REG-19 | Visualizar marcas de productos | Products | Media |
+| TC-REG-20 | Realizar una búsqueda y agregar al carrito de compras | Products - Cart | Alta |
+| TC-REG-21 | Agregar una opinión de un producto | Products | Media |
+| TC-REG-22 | Agregar un producto al carrito de compras de los productos recomendados | Products | Media |
+| TC-REG-23 | Descargar factura después de realizar una compra | Cart - payment | Alta |
+| TC-REG-24 | Desplazarse a través de la página usando las flechas direccionales | Home | Baja |
+
+## 🏗️ Arquitectura del framework
+
+El proyecto utiliza **Page Object Model (POM)** para separar los casos de prueba de las interacciones con la aplicación. También incorpora componentes reutilizables para sincronización, manejo de anuncios, lectura de datos, validaciones y registro de resultados.
+
+### Organización por responsabilidades
+
+| Capa o componente | Clases principales | Responsabilidad |
+|---|---|---|
+| Casos de prueba | `LogInModule`, `ProductsModule`, `SecondaryFunctionalities` | Definir los escenarios y verificar los resultados esperados mediante TestNG. |
+| Page Objects | `HomePage`, `LoginPage`, `ProductPage`, `ProductDetailPage`, `CartPage`, `CheckOutPage`, `PaymentPage`, `ContactUsPage`, `TestCasePage` | Encapsular los elementos y las acciones de cada página. |
+| Componentes compartidos | `AbstractElements`, `ProductActions` | Centralizar interacciones reutilizables y operaciones relacionadas con productos. |
+| Preparación y configuración | `BaseTest`, `GlobalData.properties` | Configurar el navegador y preparar el contexto de ejecución de las pruebas. |
+| Datos y validaciones | `DataReader`, `getData`, `SoftValidation`, archivos JSON | Proporcionar datos de entrada y apoyar las verificaciones de los escenarios. |
+| Eventos y anuncios | `AdHandler`, `AdListener`, `TestListener` | Gestionar interferencias de anuncios y registrar eventos o resultados de ejecución. |
+| Reportes y registros | `ExtendReporterNG`, `log4j2.xml` | Configurar los reportes y los registros de diagnóstico. |
+
+### Flujo general de una prueba
+
+```text
+TestNG (suite XML)
+    |
+    v
+Caso de prueba (módulo)
+    |
+    v
+BaseTest: configuración e inicialización de WebDriver
+    |
+    v
+Page Objects + acciones reutilizables
+    |
+    v
+Aplicación web (Automation Exercise)
+    |
+    v
+Aserciones y validaciones
+    |
+    v
+Listeners, logs y reportes
+```
+
+Este esquema es **conceptual**: los listeners pueden actuar durante distintas etapas de la ejecución, no solamente al finalizar una prueba.
+
+### Componentes destacados
+
+**`BaseTest`** centraliza la preparación y finalización de las pruebas, incluida la selección del navegador mediante las propiedades de configuración. Esto evita repetir la inicialización del WebDriver en cada clase de pruebas.
+
+**Page Objects** representan las pantallas de la aplicación. Los casos de prueba llaman a sus métodos en lugar de repetir localizadores y operaciones de Selenium, lo que facilita actualizar la automatización cuando cambia la interfaz.
+
+**`AbstractElements`** reúne utilidades comunes, como esperas y acciones sobre elementos web. **`ProductActions`** concentra operaciones específicas de productos que pueden reutilizarse en distintos escenarios sin sobrecargar la clase de utilidades generales.
+
+**`AdHandler` y `AdListener`** apoyan el manejo de anuncios que pueden interferir con las interacciones automatizadas. Su presencia reduce la necesidad de implementar esa lógica en cada caso de prueba, aunque no elimina por completo la posibilidad de fallos intermitentes.
+
+**`TestListener`, `ExtendReporterNG` y Log4j2** permiten separar el registro y la presentación de resultados de la lógica funcional de las pruebas. Para conocer las rutas exactas de los archivos generados, consulta las secciones de logs y reportes.
+
+### Principios de diseño
+
+- **Separación de responsabilidades:** las pruebas describen escenarios; los Page Objects encapsulan las interacciones con la interfaz.
+- **Reutilización:** las operaciones comunes se implementan en componentes compartidos.
+- **Mantenibilidad:** los cambios en localizadores o interacciones se concentran en las clases correspondientes.
+- **Trazabilidad:** los casos de prueba están documentados en [`docs/test-cases.md`](docs/test-cases.md) y los resultados pueden consultarse mediante los mecanismos de reporte configurados.
+
+> **Alcance de esta documentación:** las responsabilidades se describen a partir de la estructura del proyecto y del diseño trabajado. La configuración exacta, las rutas de salida y las relaciones de herencia deben verificarse contra la versión actual del código fuente.
 
 ## 📂 Estructura del proyecto
 
+```text
+
++---main
+|   \---java
+|       +---AbstractElements
+|       |       AbstractElements.java
+|       |       AdHandler.java
+|       |       ProductActions.java
+|       |       
+|       +---Listeners
+|       |       AdListener.java
+|       |       
+|       +---PagesObjects
+|       |       CartPage.java
+|       |       CheckOutPage.java
+|       |       ContactUsPage.java
+|       |       HomePage.java
+|       |       LoginPage.java
+|       |       PaymentPage.java
+|       |       ProductDetailPage.java
+|       |       ProductPage.java
+|       |       TestCasePage.java
+|       |       
+|       \---Resources
+|               ExtendReporterNG.java
+|               GlobalData.properties
+|               
+\---test
++---java
+|   +---data
+|   |   |   DataReader.java
+|   |   |   getData.java
+|   |   |   
+|   |   +---fieldsJson
+|   |   |       loginData.json
+|   |   |       productBlueTop.json
+|   |   |       SleevesPrintedTop.json
+|   |   |       
+|   |   \---images
+|   |           imgTest.png
+|   |           
+|   +---Listeners
+|   |       TestListener.java
+|   |       
+|   +---resources
+|   |   \---extensions
+|   |           adblock-6.36.0_0.crx
+|   |           
+|   +---Test
+|   |   |   LogInModule.java
+|   |   |   ProductsModule.java
+|   |   |   SecondaryFunctionalities.java
+|   |   |   test.java
+|   |   |   
+|   |   \---softvalidation
+|   |           SoftValidation.java
+|   |           
+|   \---TestComponents
+|           BaseTest.java
+|           
+\---resources
+log4j2.xml
+```
+
+
 ## 📈 Roadmap (opcional)
+
+_Pendiente de definir._
 
 ## 🤝 Contribución
 
 Las contribuciones son bienvenidas.  
-Por favor abre un issue o un pull request.
+Por favor, abre un issue o un pull request.
 
 ## 👤 Autor
 

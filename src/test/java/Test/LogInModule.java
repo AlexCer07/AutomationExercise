@@ -26,14 +26,13 @@ public class LogInModule extends BaseTest {
         //Step 3 - Hacer clic en el botón Signup
         loginPage.signUp(userData.get("userName"), userData.get("email"));
 
-        //Step 4 - Completar la información obligatoria de la cuenta.
+        //Step 4 - Completar la información obligatoria de la cuenta en el formulario.
         //Step 5 - seleccionar la opción sign up for our newsletter.
         //Step 6 - seleccionar la opción Receive special offers from our partners.
-        //Step 7 - Completar la información de dirección obligatoria.
-        //Step 8 - Presionar el botón Create Account.
+        //Step 7 - Presionar el botón Create Account.
         loginPage.informationAccount(userData);
 
-        //Step 9 - Hacer clic en el botón continuar
+        //Step 8 - Hacer clic en el botón continuar
         String accountCreatedMsg = loginPage.accountCreated();
         softAssert.assertEquals(accountCreatedMsg, "ACCOUNT CREATED!",
                 "Wrong Message");
