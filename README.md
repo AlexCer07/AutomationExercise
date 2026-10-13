@@ -75,7 +75,7 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
    cd AutomationExercise
    ```
 
-3. Instala las dependencias con Maven:
+3. Instala las dependencias con Maven (ejecuta las pruebas como parte del proceso, salvo que se omitan o se configuren de otra manera.):
 
    ```bash
    mvn clean install
@@ -110,7 +110,7 @@ Desde una terminal situada en la raíz del proyecto, ejecuta el siguiente comand
 mvn test -Dsurefire.suiteXmlFiles=ruta/a/suit-login.xml
 ```
 
-Por ejemplo, **si las suites están almacenadas en la raíz del proyecto**, los comandos serían:
+Por ejemplo, **si las suites están almacenadas en el directorio SuitTests** **del proyecto**, los comandos serían:
 
 **Suite de login:**
 
@@ -121,13 +121,13 @@ mvn test -Dsurefire.suiteXmlFiles=SuitTests/suit-login.xml
 **Suite de productos:**
 
 ```bash
-mvn test -Dsurefire.suiteXmlFiles=SuitTests/suit-secundaryFunctionalities.xml
+mvn test -Dsurefire.suiteXmlFiles=SuitTests/suit-product.xml
 ```
 
 **Suite de funcionalidades secundarias:**
 
 ```bash
-mvn test -Dsurefire.suiteXmlFiles=suit-secundaryFunctionalities.xml
+mvn test -Dsurefire.suiteXmlFiles=SuitTests/suit-secundaryFunctionalities.xml
 ```
 
 > **Importante:** Para que estos comandos funcionen, Maven Surefire debe estar configurado con soporte para TestNG y la propiedad `surefire.suiteXmlFiles`. La ubicación de las suites y la configuración de `pom.xml` deben verificarse en el proyecto.

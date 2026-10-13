@@ -66,5 +66,22 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.5</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>SuitTests/suit-login.xml</suiteXmlFile>
+                        <suiteXmlFile>SuitTests/suit-product.xml</suiteXmlFile>
+                        <suiteXmlFile>SuitTests/suit-secundaryFunctionalities.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     
 </project>
