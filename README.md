@@ -7,16 +7,13 @@ Este proyecto valida los flujos críticos de un e-commerce utilizando Selenium W
 🔗 Sistema bajo prueba (SUT): https://automationexercise.com/
 
 
-**Nota: pendiente de cambiar rutas para que funcione en distintos equipos**
-
-
 > ⚠️ Este sitio es propiedad de un tercero y se utiliza únicamente con fines educativos, por lo que la responsabilidad del mantenimiento del sitio está fuera de alcance.
 
 ## 🎯 Objetivo del proyecto
 
 Demostrar habilidades en:
 * Automatización de pruebas funcionales end-to-end
-* Diseño de frameworks de automatización escalables
+* Diseño de frameworks de automatización escalable
 * Implementación de buenas prácticas (POM, separación de capas)
 * Validación de flujos críticos de negocio
 
@@ -58,16 +55,18 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
 
 * Java 17
 * Maven
-* Navegador Google Chrome
-* ChromeDriver compatible con tu versión de Chrome
-* Conexión a Internet
+* Google Chrome o Mozilla Firefox (según el navegador seleccionado).
+* Controlador compatible con el navegador: ChromeDriver para Chrome o GeckoDriver para Firefox, si la configuración de Selenium no lo resuelve automáticamente.
+* Conexión a Internet para acceder a la aplicación bajo prueba y descargar dependencias cuando sea necesario.
+
+> **Compatibilidad:** el proyecto contempla la selección de Chrome y Firefox mediante `GlobalData.properties`. Las versiones de navegador y controlador compatibles deben comprobarse en el equipo donde se ejecuten las pruebas.
 
 ## ⚙️ Instalación
 
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/AlexCer07/AutomationExercise
+   git clone https://github.com/AlexCer07/AutomationExercise.git
    ```
 
 2. Ingresa al proyecto:
@@ -88,11 +87,11 @@ El proyecto utiliza **TestNG** para organizar y ejecutar los casos de prueba. Es
 
 ### Suites de pruebas
 
-| Archivo | Propósito |
-|---|---|
-| `suit-login.xml` | Ejecutar las pruebas relacionadas con el registro, el inicio y el cierre de sesión. |
-| `suit-product.xml` | Ejecutar las pruebas relacionadas con productos. |
-| `suit-secundaryFunctionalities.xml` | Ejecutar las pruebas de funcionalidades secundarias. |
+| Archivo                             | Propósito                                                                           |
+|-------------------------------------|-------------------------------------------------------------------------------------|
+| `suit-login.xml`                    | Ejecutar las pruebas relacionadas con el registro, el inicio y el cierre de sesión. |
+| `suit-product.xml`                  | Ejecutar las pruebas relacionadas con productos.                                    |
+| `suit-secundaryFunctionalities.xml` | Ejecutar las pruebas de funcionalidades secundarias.                                |
 
 > **Nota:** Los nombres de los archivos deben coincidir exactamente con los existentes en el proyecto. Las funcionalidades incluidas en cada suite dependen de las clases y métodos declarados en sus archivos XML.
 
@@ -116,13 +115,13 @@ Por ejemplo, **si las suites están almacenadas en la raíz del proyecto**, los 
 **Suite de login:**
 
 ```bash
-mvn test -Dsurefire.suiteXmlFiles=suit-login.xml
+mvn test -Dsurefire.suiteXmlFiles=SuitTests/suit-login.xml
 ```
 
 **Suite de productos:**
 
 ```bash
-mvn test -Dsurefire.suiteXmlFiles=suit-product.xml
+mvn test -Dsurefire.suiteXmlFiles=SuitTests/suit-secundaryFunctionalities.xml
 ```
 
 **Suite de funcionalidades secundarias:**
@@ -167,7 +166,7 @@ browser=firefox
 
 Guarda el archivo antes de ejecutar las pruebas. El valor debe coincidir con los admitidos por la implementación actual de `BaseTest`.
 
-> **Importante:** La compatibilidad de versiones, la resolución de los controladores y la configuración de perfiles o extensiones dependen del código de `BaseTest` y del entorno local. Antes de ejecutar el proyecto en otro equipo, revisa las rutas específicas de máquina y los requisitos de cada navegador.
+> **Importante:** La resolución de controladores, los perfiles y las extensiones pueden depender de la configuración de `BaseTest` y del equipo. Consulta la sección [Limitaciones conocidas](#️-limitaciones-conocidas) antes de ejecutar las pruebas en otro entorno.
 
 ### Manejo de anuncios
 
@@ -213,32 +212,32 @@ Algunas reglas consideradas en la automatización:
 
 El proyecto documenta **24 casos de prueba funcionales**, organizados por escenario, módulo y prioridad. Las precondiciones, los datos de prueba, los pasos y los resultados esperados se encuentran en [la documentación completa de casos de prueba](docs/test-cases.md).
 
-| ID | Caso de prueba | Módulo | Prioridad |
-|---|---|---|---|
-| TC-REG-01 | Registrar usuario | Registro | Alta |
-| TC-REG-02 | Iniciar sesión | Login | Alta |
-| TC-REG-03 | Cerrar sesión | Login | Alta |
-| TC-REG-04 | Iniciar sesión con usuario no registrado en el sistema | Login | Alta |
-| TC-REG-05 | Registrar usuario con correo electrónico registrado previamente | Registro | Alta |
-| TC-REG-06 | Eliminar cuenta | Login | Alta |
-| TC-REG-07 | Enviar un mensaje de contacto | Contact us | Media |
-| TC-REG-08 | Navegar a los casos de prueba | Test cases | Baja |
-| TC-REG-09 | Mostrar detalle del producto | Product detail | Alta |
-| TC-REG-10 | Buscar producto | Product | Alta |
-| TC-REG-11 | Realizar suscripción desde la vista principal | Home - Suscripción | Media |
-| TC-REG-12 | Realizar suscripción desde el carrito de compras | Cart -  Suscripción | Media |
-| TC-REG-13 | Agregar productos a carrito de compras | Products - Cart | Alta |
-| TC-REG-14 | Agregar más de un mismo tipo de producto a carrito de compras | Detail product - Cart | Alta |
-| TC-REG-15 | Realizar un pedido, registrarse durante el proceso de pago | Cart - payment | Alta |
-| TC-REG-16 | Realizar un pedido con usuario autenticado | Cart - payment | Alta |
-| TC-REG-17 | Remover productos del carrito | Cart - payment | Alta |
-| TC-REG-18 | Visualizar categorías de productos | Products | Alta |
-| TC-REG-19 | Visualizar marcas de productos | Products | Media |
-| TC-REG-20 | Realizar una búsqueda y agregar al carrito de compras | Products - Cart | Alta |
-| TC-REG-21 | Agregar una opinión de un producto | Products | Media |
-| TC-REG-22 | Agregar un producto al carrito de compras de los productos recomendados | Products | Media |
-| TC-REG-23 | Descargar factura después de realizar una compra | Cart - payment | Alta |
-| TC-REG-24 | Desplazarse a través de la página usando las flechas direccionales | Home | Baja |
+| ID        | Caso de prueba                                                          | Módulo                | Prioridad |
+|-----------|-------------------------------------------------------------------------|-----------------------|-----------|
+| TC-REG-01 | Registrar usuario                                                       | Registro              | Alta      |
+| TC-REG-02 | Iniciar sesión                                                          | Login                 | Alta      |
+| TC-REG-03 | Cerrar sesión                                                           | Login                 | Alta      |
+| TC-REG-04 | Iniciar sesión con usuario no registrado en el sistema                  | Login                 | Alta      |
+| TC-REG-05 | Registrar usuario con correo electrónico registrado previamente         | Registro              | Alta      |
+| TC-REG-06 | Eliminar cuenta                                                         | Login                 | Alta      |
+| TC-REG-07 | Enviar un mensaje de contacto                                           | Contact us            | Media     |
+| TC-REG-08 | Navegar a los casos de prueba                                           | Test cases            | Baja      |
+| TC-REG-09 | Mostrar detalle del producto                                            | Product detail        | Alta      |
+| TC-REG-10 | Buscar producto                                                         | Product               | Alta      |
+| TC-REG-11 | Realizar suscripción desde la vista principal                           | Home - Suscripción    | Media     |
+| TC-REG-12 | Realizar suscripción desde el carrito de compras                        | Cart -  Suscripción   | Media     |
+| TC-REG-13 | Agregar productos a carrito de compras                                  | Products - Cart       | Alta      |
+| TC-REG-14 | Agregar más de un mismo tipo de producto a carrito de compras           | Detail product - Cart | Alta      |
+| TC-REG-15 | Realizar un pedido, registrarse durante el proceso de pago              | Cart - payment        | Alta      |
+| TC-REG-16 | Realizar un pedido con usuario autenticado                              | Cart - payment        | Alta      |
+| TC-REG-17 | Remover productos del carrito                                           | Cart - payment        | Alta      |
+| TC-REG-18 | Visualizar categorías de productos                                      | Products              | Alta      |
+| TC-REG-19 | Visualizar marcas de productos                                          | Products              | Media     |
+| TC-REG-20 | Realizar una búsqueda y agregar al carrito de compras                   | Products - Cart       | Alta      |
+| TC-REG-21 | Agregar una opinión de un producto                                      | Products              | Media     |
+| TC-REG-22 | Agregar un producto al carrito de compras de los productos recomendados | Products              | Media     |
+| TC-REG-23 | Descargar factura después de realizar una compra                        | Cart - payment        | Alta      |
+| TC-REG-24 | Desplazarse a través de la página usando las flechas direccionales      | Home                  | Baja      |
 
 ## 🏗️ Arquitectura del framework
 
@@ -246,15 +245,15 @@ El proyecto utiliza **Page Object Model (POM)** para separar los casos de prueba
 
 ### Organización por responsabilidades
 
-| Capa o componente | Clases principales | Responsabilidad |
-|---|---|---|
-| Casos de prueba | `LogInModule`, `ProductsModule`, `SecondaryFunctionalities` | Definir los escenarios y verificar los resultados esperados mediante TestNG. |
-| Page Objects | `HomePage`, `LoginPage`, `ProductPage`, `ProductDetailPage`, `CartPage`, `CheckOutPage`, `PaymentPage`, `ContactUsPage`, `TestCasePage` | Encapsular los elementos y las acciones de cada página. |
-| Componentes compartidos | `AbstractElements`, `ProductActions` | Centralizar interacciones reutilizables y operaciones relacionadas con productos. |
-| Preparación y configuración | `BaseTest`, `GlobalData.properties` | Configurar el navegador y preparar el contexto de ejecución de las pruebas. |
-| Datos y validaciones | `DataReader`, `getData`, `SoftValidation`, archivos JSON | Proporcionar datos de entrada y apoyar las verificaciones de los escenarios. |
-| Eventos y anuncios | `AdHandler`, `AdListener`, `TestListener` | Gestionar interferencias de anuncios y registrar eventos o resultados de ejecución. |
-| Reportes y registros | `ExtendReporterNG`, `log4j2.xml` | Configurar los reportes y los registros de diagnóstico. |
+| Capa o componente           | Clases principales                                                                                                                      | Responsabilidad                                                                     |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| Casos de prueba             | `LogInModule`, `ProductsModule`, `SecondaryFunctionalities`                                                                             | Definir los escenarios y verificar los resultados esperados mediante TestNG.        |
+| Page Objects                | `HomePage`, `LoginPage`, `ProductPage`, `ProductDetailPage`, `CartPage`, `CheckOutPage`, `PaymentPage`, `ContactUsPage`, `TestCasePage` | Encapsular los elementos y las acciones de cada página.                             |
+| Componentes compartidos     | `AbstractElements`, `ProductActions`                                                                                                    | Centralizar interacciones reutilizables y operaciones relacionadas con productos.   |
+| Preparación y configuración | `BaseTest`, `GlobalData.properties`                                                                                                     | Configurar el navegador y preparar el contexto de ejecución de las pruebas.         |
+| Datos y validaciones        | `DataReader`, `getData`, `SoftValidation`, archivos JSON                                                                                | Proporcionar datos de entrada y apoyar las verificaciones de los escenarios.        |
+| Eventos y anuncios          | `AdHandler`, `AdListener`, `TestListener`                                                                                               | Gestionar interferencias de anuncios y registrar eventos o resultados de ejecución. |
+| Reportes y registros        | `ExtendReporterNG`, `log4j2.xml`                                                                                                        | Configurar los reportes y los registros de diagnóstico.                             |
 
 ### Flujo general de una prueba
 
@@ -305,74 +304,65 @@ Este esquema es **conceptual**: los listeners pueden actuar durante distintas et
 
 ## 📂 Estructura del proyecto
 
-```text
+La siguiente estructura resume los directorios principales y los componentes documentados. Las carpetas `logs/`, `reports/` y `target/` pueden contener archivos generados durante la ejecución; no es necesario versionar sus resultados.
 
-+---main
-|   \---java
-|       +---AbstractElements
-|       |       AbstractElements.java
-|       |       AdHandler.java
-|       |       ProductActions.java
-|       |       
-|       +---Listeners
-|       |       AdListener.java
-|       |       
-|       +---PagesObjects
-|       |       CartPage.java
-|       |       CheckOutPage.java
-|       |       ContactUsPage.java
-|       |       HomePage.java
-|       |       LoginPage.java
-|       |       PaymentPage.java
-|       |       ProductDetailPage.java
-|       |       ProductPage.java
-|       |       TestCasePage.java
-|       |       
-|       \---Resources
-|               ExtendReporterNG.java
-|               GlobalData.properties
-|               
-\---test
-+---java
-|   +---data
-|   |   |   DataReader.java
-|   |   |   getData.java
-|   |   |   
-|   |   +---fieldsJson
-|   |   |       loginData.json
-|   |   |       productBlueTop.json
-|   |   |       SleevesPrintedTop.json
-|   |   |       
-|   |   \---images
-|   |           imgTest.png
-|   |           
-|   +---Listeners
-|   |       TestListener.java
-|   |       
-|   +---resources
-|   |   \---extensions
-|   |           adblock-6.36.0_0.crx
-|   |           
-|   +---Test
-|   |   |   LogInModule.java
-|   |   |   ProductsModule.java
-|   |   |   SecondaryFunctionalities.java
-|   |   |   test.java
-|   |   |   
-|   |   \---softvalidation
-|   |           SoftValidation.java
-|   |           
-|   \---TestComponents
-|           BaseTest.java
-|           
-\---resources
-log4j2.xml
+```text
+AutomationExercise/
+├── docs/
+│   └── test-cases.md
+├── logs/                         # Registros de ejecución (generados)
+├── reports/                      # Reportes de pruebas (generados)
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       ├── AbstractElements/
+│   │       │   ├── AbstractElements.java
+│   │       │   ├── AdHandler.java
+│   │       │   └── ProductActions.java
+│   │       ├── Listeners/
+│   │       │   └── AdListener.java
+│   │       ├── PagesObjects/
+│   │       │   ├── CartPage.java
+│   │       │   ├── CheckOutPage.java
+│   │       │   ├── ContactUsPage.java
+│   │       │   ├── HomePage.java
+│   │       │   ├── LoginPage.java
+│   │       │   ├── PaymentPage.java
+│   │       │   ├── ProductDetailPage.java
+│   │       │   ├── ProductPage.java
+│   │       │   └── TestCasePage.java
+│   │       └── Resources/
+│   │           ├── ExtendReporterNG.java
+│   │           └── GlobalData.properties
+│   └── test/
+│       ├── java/
+│       │   ├── data/
+│       │   ├── Listeners/
+│       │   │   └── TestListener.java
+│       │   ├── Test/
+│       │   │   ├── LogInModule.java
+│       │   │   ├── ProductsModule.java
+│       │   │   └── SecondaryFunctionalities.java
+│       │   └── TestComponents/
+│       │       └── BaseTest.java
+│       └── resources/
+├── SuitTests/                     # Suites XML de TestNG
+├── target/                        # Resultados de compilación Maven (generados)
+├── .gitignore
+├── pom.xml
+└── README.md
 ```
 
+> **Nota:** Se muestran los archivos más representativos, no todos los recursos de prueba. La ubicación exacta de `log4j2.xml` y de los archivos de salida debe verificarse en el proyecto actual.
 
-## 📈 Roadmap (opcional)
+## ⚠️ Limitaciones conocidas
 
-_Pendiente de definir._
+- **Portabilidad entre equipos:** algunas rutas de perfiles, extensiones, descargas o archivos de salida podrían depender del entorno local. Antes de ejecutar las pruebas en otro equipo, revisa `BaseTest`, `GlobalData.properties` y la configuración de reportes.
+- **Compatibilidad de navegadores:** Chrome y Firefox requieren versiones compatibles con sus controladores. La forma de resolverlos depende de la configuración de Selenium utilizada.
+- **Anuncios de terceros:** el sitio bajo prueba puede mostrar anuncios que interfieran con las interacciones automatizadas. `AdHandler` y `AdListener` ayudan a gestionarlos, pero no garantizan eliminarlos en todos los escenarios.
+- **Disponibilidad del sitio:** la aplicación bajo prueba pertenece a un tercero; sus cambios y periodos de indisponibilidad pueden afectar los resultados.
+
+Estas limitaciones describen aspectos que deben verificarse en cada entorno; no implican que todas las ejecuciones presenten dichos problemas.
 
 ## 🤝 Contribución
 
