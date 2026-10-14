@@ -31,22 +31,17 @@ También se utilizan:
 ## 🚀 Características
 
 * Automatización de flujos funcionales de un comercio electrónico
-
 * Ejecución de pruebas mediante Selenium WebDriver
-
 * Manejo de Page Object Model (POM)
-
 * Uso de Data Providers para pruebas parametrizadas
-
 * Validaciones de comportamiento del sistema mediante TestNG
-
 * Reportes básicos de ejecución
 
 ## 🧱 Tecnologías
 
 * Java 17
-* Selenium
-* TestNG
+* Selenium 4.27.0
+* TestNG 7.7.0
 * Maven
 
 ## 📋 Requisitos
@@ -98,9 +93,10 @@ El proyecto utiliza **TestNG** para organizar y ejecutar los casos de prueba. Es
 ### Ejecutar una suite desde IntelliJ IDEA
 
 1. Abre el proyecto en IntelliJ IDEA.
-2. Localiza el archivo XML de la suite que deseas ejecutar.
-3. Haz clic derecho sobre el archivo y selecciona **Run** (Ejecutar).
-4. Consulta los resultados en la ventana **Run** de IntelliJ IDEA.
+2. Localizar el archivo GobalData.properties en la ruta *\AutomationExercise\src\main\java\Resources\GlobalData.properties*, para seleccionar el navegador deseado (chrome/firefox)
+3. Localiza el archivo XML de la suite que deseas ejecutar *\AutomationExercise\SuitTests*
+4. Haz clic derecho sobre el archivo y selecciona **Run** (Ejecutar).
+5. Consulta los resultados en la ventana **Run** de IntelliJ IDEA.
 
 ### Ejecutar una suite desde Maven
 
@@ -197,8 +193,6 @@ El proyecto incorpora **ExtentReports** para presentar los resultados de las pru
 
 Los reportes permiten analizar las pruebas ejecutadas y sus resultados. Las capturas de pantalla asociadas a fallos dependen de que `TestListener` las genere y adjunte correctamente.
 
-> **Nota:** Es necesario confirmar en el código la ruta exacta del reporte HTML, el registro de capturas y el momento en que se guarda el reporte. Estos detalles pueden variar según la configuración actual.
-
 ## ✅ Reglas de negocio
 
 Algunas reglas consideradas en la automatización:
@@ -285,13 +279,13 @@ Este esquema es **conceptual**: los listeners pueden actuar durante distintas et
 
 **`BaseTest`** centraliza la preparación y finalización de las pruebas, incluida la selección del navegador mediante las propiedades de configuración. Esto evita repetir la inicialización del WebDriver en cada clase de pruebas.
 
-**Page Objects** representan las pantallas de la aplicación. Los casos de prueba llaman a sus métodos en lugar de repetir localizadores y operaciones de Selenium, lo que facilita actualizar la automatización cuando cambia la interfaz.
+**`Page Objects`** representan las pantallas de la aplicación. Los casos de prueba llaman a sus métodos en lugar de repetir localizadores y operaciones de Selenium, lo que facilita actualizar la automatización cuando cambia la interfaz.
 
 **`AbstractElements`** reúne utilidades comunes, como esperas y acciones sobre elementos web. **`ProductActions`** concentra operaciones específicas de productos que pueden reutilizarse en distintos escenarios sin sobrecargar la clase de utilidades generales.
 
 **`AdHandler` y `AdListener`** apoyan el manejo de anuncios que pueden interferir con las interacciones automatizadas. Su presencia reduce la necesidad de implementar esa lógica en cada caso de prueba, aunque no elimina por completo la posibilidad de fallos intermitentes.
 
-**`TestListener`, `ExtendReporterNG` y Log4j2** permiten separar el registro y la presentación de resultados de la lógica funcional de las pruebas. Para conocer las rutas exactas de los archivos generados, consulta las secciones de logs y reportes.
+**`TestListener`, `ExtendReporterNG` y `Log4j2`** permiten separar el registro y la presentación de resultados de la lógica funcional de las pruebas. Para conocer las rutas exactas de los archivos generados, consulta las secciones de logs y reportes.
 
 ### Principios de diseño
 
