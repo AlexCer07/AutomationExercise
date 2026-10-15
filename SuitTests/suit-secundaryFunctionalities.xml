@@ -3,7 +3,7 @@
 <suite name="SecondaryFunctionalities" verbose="1">
 
     <listeners>
-        <listener class-name="Listeners.TestListener"/>
+        <listener class-name="TestComponents.TestListener"/>
     </listeners>
 
     <test name="Functionalities Tests">
